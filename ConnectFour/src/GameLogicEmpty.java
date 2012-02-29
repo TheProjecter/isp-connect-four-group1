@@ -1,12 +1,10 @@
 
-public class GameLogic implements IGameLogic {
+public class GameLogicEmpty implements IGameLogic {
     private int x = 0;
     private int y = 0;
     private int playerID;
     
-    
-    //Consstructor
-    public GameLogic() {
+    public GameLogicEmpty() {
         //TODO Write your implementation for this method
     }
 	
@@ -24,15 +22,12 @@ public class GameLogic implements IGameLogic {
 
 
     public void insertCoin(int column, int playerID) {
-        //TODO Write your implementation for this method
-    	System.out.println(column);
-    	System.out.println(playerID);
+        //TODO Write your implementation for this method	
     }
 
     public int decideNextMove() {
         //TODO Write your implementation for this method
-    	System.out.println("Next move decision");
-    	return (int) (Math.random()*x);
+        return 0;
     }
 
 }
