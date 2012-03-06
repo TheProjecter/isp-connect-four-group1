@@ -21,11 +21,11 @@ public class jArray {
 		for (int i=0;i<N;i++){
 			if(sum>=0 && a[i]>0)
 				sum+=1;
-			if(sum<0 && a[i]>0)
+			else if(sum<0 && a[i]>0)
 				sum=1;
-			if(sum>=0 && a[i]<0)
+			else if(sum>=0 && a[i]<0)
 				sum=-1;
-			if(sum<0 && a[i]<0)
+			else if(sum<0 && a[i]<0)
 				sum-=1;
 			if(sum>max) max = sum;
 		}		
