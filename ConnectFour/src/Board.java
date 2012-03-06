@@ -23,7 +23,6 @@ public class Board {
 		for (int i =0;i<board.length;i++){
 			row[i] = board[i].col[x];
 		}
-		System.out.println(row.length);
 		return row;
 	}
 	
