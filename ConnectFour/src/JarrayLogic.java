@@ -27,7 +27,14 @@ public class JarrayLogic implements IGameLogic {
     }
 	
     public Winner gameFinished() {
-        //TODO Write your implementation for this method
+        for (jArray j: board){
+        	if(j.getSum()>=4){
+        		return Winner.PLAYER1;
+        	}
+        	if(j.getSum()<=-4){
+        		return Winner.PLAYER2;
+        	}
+        }
         return Winner.NOT_FINISHED;
     }
 
@@ -42,7 +49,7 @@ public class JarrayLogic implements IGameLogic {
 
     public int decideNextMove() {
         //TODO Write your implementation for this method
-    	return (int) (Math.random()*x);
+    	return (int) (x*Math.random());
     }
 
 }
