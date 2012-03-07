@@ -1,3 +1,5 @@
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
 
 
 public class MatrixLogicMiniMax {
@@ -16,7 +18,9 @@ public class MatrixLogicMiniMax {
 	
 	
 	int MaxValue(Board board){
-		if(TerminalTest(board)) return Utility(board);
+		if(TerminalTest(board)) {
+			return Utility(board);
+		}
 		int v = Integer.MIN_VALUE;
 		for (int a:Actions(board)){
 			v=Max(v,MinValue((Result(board,a,-1))));
@@ -46,10 +50,10 @@ public class MatrixLogicMiniMax {
 	}
 	
 	//The resulting board of playerID adding to a column a in a board s
-	Board Result(Board s,int a,int playerID){
-		Board s1=(Board) s.clone();
-		s1.add(a, playerID);
-		return s1;
+	Board Result(Board org,int a,int playerID){
+		Board board = (Board) org.clone();
+		board.add(a, playerID);
+		return board;
 	}
 	
 	
@@ -70,7 +74,6 @@ public class MatrixLogicMiniMax {
 	}
 	
 	int Utility(Board board){
-		
     	for(int col=0;col<board.colCount();col++){
     		if(MatrixLogic.calcSum(board.getColumn(col))>=4){
     			return 1;
