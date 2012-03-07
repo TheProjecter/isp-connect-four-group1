@@ -17,7 +17,10 @@ public class Board implements Cloneable{
 	@Override
 	protected Object clone(){
 		Board clone = new Board(this.columns,this.rows);
-		clone.board = this.board;
+		clone.board = new Column[this.colCount()];
+		for(int i=0;i<this.colCount();i++){
+				clone.board[i] = (Column) this.board[i].clone();
+		}
 		
 		return clone;
 	}
@@ -27,7 +30,7 @@ public class Board implements Cloneable{
 		for (int i=0;i<this.rowCount();i++){
 			
 		for (int c=0;c<this.colCount();c++){
-			n+=this.board[c].col[i];
+			n+=this.board[c].col[this.rowCount()-i-1]+"\t";
 		}
 		n+="\n";
 		}
@@ -84,13 +87,25 @@ public class Board implements Cloneable{
 	
 	
 	
-	public class Column{
+	public class Column implements Cloneable{
 		int[] col = new int[0];
 		int N=0;
 		
+				
 		public Column(int y){
 			this.col = new int[y];
 			this.N = 0;
+		}
+		
+		@Override
+		protected Object clone(){
+			Column clone = new Column(this.col.length); 
+			for (int i=0;i<this.col.length;i++){
+				clone.col[i] =this.col[i];
+					if(this.col[i]!=0)clone.N+=1;
+			}
+			
+			return clone;
 		}
 		
 		public String toString(){
