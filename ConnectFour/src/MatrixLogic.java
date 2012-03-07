@@ -4,6 +4,7 @@ public class MatrixLogic implements IGameLogic {
     private int y = 0;
     private int playerID;
     private Board board = new Board(0,0);
+    private MatrixLogicMiniMax minmax = new MatrixLogicMiniMax();
     
     public MatrixLogic() {
         //TODO Write your implementation for this method
@@ -17,30 +18,19 @@ public class MatrixLogic implements IGameLogic {
     }
 	
     public Winner gameFinished() {
-        //TODO Write your implementation for this method
-    	for(int col=0;col<x;col++){
-    		if(calcSum(board.getColumn(col))>=4){
-    			return Winner.PLAYER1;
-    		}
-    		if(calcSum(board.getColumn(col))<=-4){
-    			return Winner.PLAYER2;
-    		}
-    		
+    	if (minmax.Utility(this.board)==0){
+    		return Winner.TIE;
     	}
-    	
-    	for(int row=0;row<y;row++){
-    		if(calcSum(board.getRow(row))>=4){
-    			return Winner.PLAYER1;
-    		}
-    		if(calcSum(board.getRow(row))<=-4){
-    			return Winner.PLAYER2;
-    		}
-    		
+    	if (minmax.Utility(this.board)==1){
+    		return Winner.PLAYER1;
     	}
-        return Winner.NOT_FINISHED;
+    	if (minmax.Utility(this.board)==-1){
+    		return Winner.PLAYER2;
+    	}
+    	return Winner.NOT_FINISHED;
     }
 
-	private int calcSum(int[] N){
+	public static int calcSum(int[] N){
 		int sum=0;
 		int max=0;
 		for (int i=0;i<N.length;i++){
@@ -66,7 +56,8 @@ public class MatrixLogic implements IGameLogic {
 
     public int decideNextMove() {
         //TODO Write your implementation for this method
-        return 0;
+    	return minmax.MinimaxDecision(this.board);
+
     }
 
 }
