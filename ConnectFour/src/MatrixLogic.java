@@ -41,11 +41,6 @@ public class MatrixLogic implements IGameLogic {
 
     public int decideNextMove() {
         //TODO Write your implementation for this method
-    	System.out.println(this.board);
-    	System.out.println(this.board.rowCount() + " rows.");
-    	for (int i:this.board.getRow(1)){
-    		System.out.print(i);
-    	}
     	return minmax.MinimaxDecision(this.board);
 
     }
