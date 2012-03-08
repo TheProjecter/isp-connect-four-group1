@@ -42,10 +42,10 @@ public class MatrixLogic implements IGameLogic {
     public int decideNextMove() {
         //TODO Write your implementation for this method
     	System.out.println("Col 1 looks like:");
-    	for(int i:board.getColumn(0)){
+    	for(int i:board.getColumn(1)){
     		System.out.println(i);
     	}
-    	System.out.println("It has calcSum: "+stateEval.calcSum(board.getColumn(0)));
+    	System.out.println("It has calcSum: "+stateEval.calcSum(board.getColumn(1)));
     	return filltest();
     	
     	
@@ -54,9 +54,9 @@ public class MatrixLogic implements IGameLogic {
     }
     
     public int filltest(){
-       	if(this.board.board[3].isFull())
+       	if(this.board.board[1].isFull())
     		return 1;
-    	return 3;
+    	return 0;
     	
     }
     
