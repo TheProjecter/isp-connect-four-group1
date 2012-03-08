@@ -9,7 +9,7 @@ public class Board implements Cloneable{
 		this.board = new Column[x];
 		this.rows = y;
 		this.columns =x;
-		for (int i=0;i<y;i++){
+		for (int i=0;i<x;i++){
 			this.board[i]=new Column(y);
 		}
 	}
@@ -48,11 +48,11 @@ public class Board implements Cloneable{
 		
 		//Then an iteration to add each open col-number to an array
 		int[] openCols = new int[open];
-		for (int i=0;i<this.colCount();i++){
-			int count = 0;
-			if(!this.board[i].isFull())
+		int count = 0;
+		for (int i=0;i<this.colCount();i++){	
+			if(!this.board[i].isFull()){
 				openCols[count]=i;
-				count+=1;
+				count++;}
 		}
 		return openCols;
 	}
