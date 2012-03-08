@@ -167,6 +167,8 @@ public class Board implements Cloneable{
 				diagonal[colIt] = currentColumn.get(coinToGet);
 			}
 		}
+		
+		return diagonal;
 	}		
 
 	public int[] getRightDiagonal(int diaNumber){
