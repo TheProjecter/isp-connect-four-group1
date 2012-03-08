@@ -4,16 +4,20 @@ import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 public class MatrixLogicMiniMax {
 	
+	int c=0;
+	int dybde=0;
+	
 	public MatrixLogicMiniMax(){
 	}
 	int MinimaxDecision(Board board){
-		int max=0;
+		int v=Integer.MIN_VALUE;
+		dybde++;
 		for (int a: Actions(board)){
-			if(MinValue(Result(board,a,-1))>max){
-				max=a;
+			System.out.println("Playing branch: "+a);
+			v=Max(v,MinValue((Result(board,a,1))));
 			}
-		}
-		return max;
+		dybde--;
+		return v;
 	}
 	
 	
@@ -22,19 +26,21 @@ public class MatrixLogicMiniMax {
 			return Utility(board);
 		}
 		int v = Integer.MIN_VALUE;
+		dybde++;
 		for (int a:Actions(board)){
-			v=Max(v,MinValue((Result(board,a,-1))));
+			v=Max(v,MinValue((Result(board,a,1))));
 		}
+		dybde--;
 		return v;
 	}
 	int MinValue(Board board){
 		if(TerminalTest(board)) return Utility(board);
-		System.out.println("This board is not terminal:\n"+board);
 		int v = Integer.MAX_VALUE;
+		dybde++;
 		for (int a:Actions(board)){
-			System.out.println("Attempting to play col:"+a);
-			v=Min(v,MaxValue((Result(board,a,1))));
+			v=Min(v,MaxValue((Result(board,a,-1))));
 		}
+		dybde--;
 		return v;
 	}
 	
@@ -53,8 +59,11 @@ public class MatrixLogicMiniMax {
 	
 	//The resulting board of playerID adding to a column a in a board s
 	Board Result(Board org,int a,int playerID){
+		c+=1;
+		if(c>1000) System.exit(-1);
 		Board board = (Board) org.clone();
 		board.add(a, playerID);
+		System.out.println(dybde);
 		return board;
 	}
 	
