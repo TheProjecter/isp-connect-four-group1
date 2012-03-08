@@ -96,7 +96,7 @@ public class ShowGame
         
         // Setup of the frame containing the game
         JFrame f = new JFrame();
-        f.setSize(1000,800);
+        f.setSize(800,600);
         f.setTitle("Four Connect");
         f.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         f.getContentPane().add(g);    
