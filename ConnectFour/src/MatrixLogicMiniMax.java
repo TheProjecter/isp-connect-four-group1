@@ -19,7 +19,7 @@ public class MatrixLogicMiniMax {
 		System.out.println("After "+counter+" evaluations.");
 		counter=0;
 		System.out.println("I have chosen to play: "+choice);
-		System.out.println("For a best outcome of: "+v);
+		System.out.println("For an expected outcome of: "+v);
 		return choice;
 	}
 	
@@ -32,9 +32,8 @@ public class MatrixLogicMiniMax {
 		int v = Integer.MIN_VALUE;
 		for (int a:Actions(board)){
 			v=Max(v,MinValue((Result(board,a,1))));
-			if(counter>cutoff) break;
+			if(counter>cutoff){break;}
 		}
-		System.out.println("For a MaxVal of: "+v);
 		return v;
 	}
 	int MinValue(Board board){
@@ -45,10 +44,29 @@ public class MatrixLogicMiniMax {
 		int v = Integer.MAX_VALUE;
 		for (int a:Actions(board)){
 			v=Min(v,MaxValue((Result(board,a,-1))));
-			if(counter>cutoff) break;
+			if(counter>cutoff){break;}
 		}
-		System.out.println("For a MinVal of: "+v);
 		return v;
+	}
+	
+	private int calcSum(int[] N){
+		int sum=0;
+		int max=0;
+		for (int i=0;i<N.length;i++){
+			if(sum>=0 && N[i]>0)
+				sum+=1;
+			else if(sum<0 && N[i]>0)
+				sum=1;
+			else if(sum>=0 && N[i]<0)
+				sum=-1;
+			else if(sum<0 && N[i]<0)
+				sum-=1;
+			else if(N[i]==0){
+				sum=0;
+			}
+			if(Math.abs(sum)>max) max = sum;
+		}
+		return max;
 	}
 	
 	int Max(int a, int b){
@@ -80,48 +98,48 @@ public class MatrixLogicMiniMax {
 	boolean TerminalTest(Board board){
 		if(board.isFull()) return true;
 	  	for(int col=0;col<board.colCount();col++){
-    		if(Math.abs(MatrixLogic.calcSum(board.getColumn(col)))>=4)
+    		if(Math.abs(calcSum(board.getColumn(col)))>=4)
     			return true;}    	
     	for(int row=0;row<board.rowCount();row++){
-    		if(Math.abs(MatrixLogic.calcSum(board.getRow(row)))>=4)
+    		if(Math.abs(calcSum(board.getRow(row)))>=4)
     			return true;}    		
         return false;
 	}
 	
 	int Utility(Board board){
     	for(int col=0;col<board.colCount();col++){
-    		if(MatrixLogic.calcSum(board.getColumn(col))>=4){
+    		if(calcSum(board.getColumn(col))>=4){
     			return 1;
     		}
-    		if(MatrixLogic.calcSum(board.getColumn(col))<=-4){
+    		if(calcSum(board.getColumn(col))<=-4){
     			return -1;
     		}
     		
     	}
     	
     	for(int row=0;row<board.rowCount();row++){
-    		if(MatrixLogic.calcSum(board.getRow(row))>=4){
+    		if(calcSum(board.getRow(row))>=4){
     			return 1;
     		}
-    		if(MatrixLogic.calcSum(board.getRow(row))<=-4){
+    		if(calcSum(board.getRow(row))<=-4){
     			return -1;
     		}
     	
         for(int leftDiagonal=0; leftDiagonal < board.diagonalCount();leftDiagonal++){
-        	if(MatrixLogic.calcSum(board.getLeftDiagonal(leftDiagonal))>=4){
+        	if(calcSum(board.getLeftDiagonal(leftDiagonal))>=4){
         		return 1;
         	}
-        	if(MatrixLogic.calcSum(board.getLeftDiagonal(leftDiagonal))<=-4){
+        	if(calcSum(board.getLeftDiagonal(leftDiagonal))<=-4){
         		return -1;
         	}
         		
         }
         
         for(int rightDiagonal=0; rightDiagonal < board.diagonalCount();rightDiagonal++){
-        	if(MatrixLogic.calcSum(board.getRightDiagonal(rightDiagonal))>=4){
+        	if(calcSum(board.getRightDiagonal(rightDiagonal))>=4){
         		return 1;
         	}
-        	if(MatrixLogic.calcSum(board.getRightDiagonal(rightDiagonal))<=-4){
+        	if(calcSum(board.getRightDiagonal(rightDiagonal))<=-4){
         		return -1;
         	}
         		

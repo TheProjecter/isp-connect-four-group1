@@ -30,22 +30,7 @@ public class MatrixLogic implements IGameLogic {
     	return Winner.NOT_FINISHED;
     }
 
-	public static int calcSum(int[] N){
-		int sum=0;
-		int max=0;
-		for (int i=0;i<N.length;i++){
-			if(sum>=0 && N[i]>0)
-				sum+=1;
-			else if(sum<0 && N[i]>0)
-				sum=1;
-			else if(sum>=0 && N[i]<0)
-				sum=-1;
-			else if(sum<0 && N[i]<0)
-				sum-=1;
-			if(Math.abs(sum)>max) max = sum;
-		}
-		return max;
-	}
+
     
 
     public void insertCoin(int column, int playerID) {
@@ -56,6 +41,11 @@ public class MatrixLogic implements IGameLogic {
 
     public int decideNextMove() {
         //TODO Write your implementation for this method
+    	System.out.println(this.board);
+    	System.out.println(this.board.rowCount() + " rows.");
+    	for (int i:this.board.getRow(1)){
+    		System.out.print(i);
+    	}
     	return minmax.MinimaxDecision(this.board);
 
     }

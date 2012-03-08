@@ -70,7 +70,7 @@ public class Board implements Cloneable{
 	}
 
 	public int[] getRow(int x){
-		int[] row = new int[board.length];
+		int[] row = new int[this.colCount()];
 		for (int i =0;i<board.length;i++){
 			row[i] = board[i].col[x];
 		}
