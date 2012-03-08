@@ -2,7 +2,7 @@
 
 public class MatrixLogicMiniMax {
 	int counter =0;
-	int cutoff=2;
+	int cutoff=100000;
 	
 	public MatrixLogicMiniMax(){
 	}
@@ -34,7 +34,6 @@ public class MatrixLogicMiniMax {
 			v=Max(v,MinValue((Result(board,a,1))));
 			if(counter>cutoff) return v;
 		}
-		System.out.println("For a best maxval of"+v);
 		return v;
 	}
 	int MinValue(Board board){
@@ -47,7 +46,6 @@ public class MatrixLogicMiniMax {
 			v=Min(v,MaxValue((Result(board,a,-1))));
 			if(counter>cutoff) return v;
 		}
-		System.out.println("For a best minval of"+v);
 		return v;
 	}
 	
