@@ -32,8 +32,9 @@ public class MatrixLogicMiniMax {
 		int v = Integer.MIN_VALUE;
 		for (int a:Actions(board)){
 			v=Max(v,MinValue((Result(board,a,1))));
-			if(counter>cutoff) return v;
+			if(counter>cutoff) break;
 		}
+		System.out.println("For a MaxVal of: "+v);
 		return v;
 	}
 	int MinValue(Board board){
@@ -44,8 +45,9 @@ public class MatrixLogicMiniMax {
 		int v = Integer.MAX_VALUE;
 		for (int a:Actions(board)){
 			v=Min(v,MaxValue((Result(board,a,-1))));
-			if(counter>cutoff) return v;
+			if(counter>cutoff) break;
 		}
+		System.out.println("For a MinVal of: "+v);
 		return v;
 	}
 	
