@@ -53,7 +53,7 @@ public class MatrixLogicMiniMaxAB {
 		return v;
 	}
 	
-	private int calcSum(int[] N){
+	public int calcSum(int[] N){
 		int sum=0;
 		int max=0;
 		for (int i=0;i<N.length;i++){
