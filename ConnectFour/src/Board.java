@@ -117,7 +117,7 @@ public class Board implements Cloneable{
 		return diagonals;
 	}
 	
-	private int[] getDiagonal(String leftOrRight, int diaNumber){
+	public int[] getDiagonal(String leftOrRight, int diaNumber){
 		int diagonalSize;
 		
 		if (rows>columns)
@@ -148,7 +148,51 @@ public class Board implements Cloneable{
 		}
 		return diagonal;
 	}
+	
 
+	public int[] getLeftDiagonal(int diaNumber){
+		int diagonalSize;
+		
+		if (rows>columns)
+			diagonalSize = rows;
+		else
+			diagonalSize = columns;
+		
+		int[] diagonal = new int[diagonalSize];
+		
+		for(int colIt = 0 ; colIt < columns; colIt++){
+			int coinToGet = 3+diaNumber+colIt;
+			if (!((coinToGet > rows) || (coinToGet < 0))){
+				Column currentColumn = this.board[colIt];
+				diagonal[colIt] = currentColumn.get(coinToGet);
+			}
+		}
+	}		
+
+	public int[] getRightDiagonal(int diaNumber){
+		int diagonalSize;
+		
+		if (rows>columns)
+			diagonalSize = rows;
+		else
+			diagonalSize = columns;
+		
+		int[] diagonal = new int[diagonalSize];
+		
+		for(int colIt = 0 ; colIt < columns; colIt++){
+			int coinToGet = 3+diaNumber+colIt;
+			if (!((coinToGet > rows) || (coinToGet < 0))){
+				Column currentColumn = this.board[colIt];
+				diagonal[colIt] = currentColumn.get(coinToGet);
+			}
+		}
+		return diagonal;
+	}
+
+	
+	public int[] getLeftDiagonal(int diaNumber){
+		
+	}
 	
  	public int diagonalCount(){
 		return rows+columns-7;
