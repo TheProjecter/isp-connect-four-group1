@@ -153,7 +153,7 @@ public class Board implements Cloneable{
 		int[] diagonal = new int[diagonalSize];
 		
 		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
-			int coinToGet = diaNumber+4-colIt;
+			int coinToGet = diaNumber+3-colIt;
 			if (!((coinToGet >= rows) || (coinToGet < 0))){
 				Column currentColumn = this.board[colIt];
 				diagonal[colIt] = currentColumn.get(coinToGet);
