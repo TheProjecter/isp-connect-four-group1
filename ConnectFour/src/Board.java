@@ -77,6 +77,83 @@ public class Board implements Cloneable{
 		return row;
 	}
 	
+	public int[][] getDiagonals(String leftOrRight){
+		int diagonalSize;
+		
+		if (rows>columns)
+			diagonalSize = rows;
+		else
+			diagonalSize = columns;
+		
+		int diagonalCount = rows+columns-7; 
+		
+		int[][] diagonals = new int[diagonalCount][diagonalSize];
+		if (leftOrRight == "left"){
+			int start = columns-4;
+			int stop = 4-rows;
+			for(int diaIt = start ; diaIt <= stop ; diaIt--){
+				for(int colIt = 0 ; colIt < columns; colIt++){
+					int coinToGet = diaIt+colIt;
+					if (!((coinToGet > rows) || (coinToGet < 0))){
+						Column currentColumn = this.board[colIt];
+						diagonals[diaIt][colIt] = currentColumn.get(coinToGet);
+					}
+				}
+			}
+		}
+		else if (leftOrRight == "right"){
+			int start = 3;
+			int stop = rows+columns-5;
+			for(int diaIt = start; diaIt <= stop ; diaIt++){
+				for(int colIt = 0 ; colIt < columns; colIt++){
+					int coinToGet = diaIt+colIt;
+					if (!((coinToGet > rows) || (coinToGet < 0))){
+						Column currentColumn = this.board[colIt];
+						diagonals[diaIt][colIt] = currentColumn.get(coinToGet);
+					}
+				}
+			}
+		}
+		return diagonals;
+	}
+	
+	private int[] getDiagonal(String leftOrRight, int diaNumber){
+		int diagonalSize;
+		
+		if (rows>columns)
+			diagonalSize = rows;
+		else
+			diagonalSize = columns;
+		
+		int[] diagonal = new int[diagonalSize];
+		
+		if (leftOrRight == "left"){
+			for(int colIt = 0 ; colIt < columns; colIt++){
+				int coinToGet = 3+diaNumber+colIt;
+				if (!((coinToGet > rows) || (coinToGet < 0))){
+					Column currentColumn = this.board[colIt];
+					diagonal[colIt] = currentColumn.get(coinToGet);
+				}
+			}
+		}
+		
+		else if (leftOrRight == "right"){
+			for(int colIt = 0 ; colIt < columns; colIt++){
+				int coinToGet = 3+diaNumber+colIt;
+				if (!((coinToGet > rows) || (coinToGet < 0))){
+					Column currentColumn = this.board[colIt];
+					diagonal[colIt] = currentColumn.get(coinToGet);
+				}
+			}
+		}
+		return diagonal;
+	}
+
+	
+ 	public int diagonalCount(){
+		return rows+columns-7;
+	}
+	
 	int rowCount(){
 		return this.rows;
 	}
@@ -126,6 +203,10 @@ public class Board implements Cloneable{
 				N++;				
 			}
 			
+		}
+		
+		int get(int place){
+			return col[place];
 		}
 				
 	}
