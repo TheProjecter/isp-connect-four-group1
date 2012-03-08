@@ -101,6 +101,7 @@ public class Board implements Cloneable{
 				}
 			}
 		}
+		
 		else if (leftOrRight == "right"){
 			int start = 3;
 			int stop = rows+columns-5;
@@ -116,39 +117,7 @@ public class Board implements Cloneable{
 		}
 		return diagonals;
 	}
-	
-	public int[] getDiagonal(String leftOrRight, int diaNumber){
-		int diagonalSize;
 		
-		if (rows>columns)
-			diagonalSize = rows;
-		else
-			diagonalSize = columns;
-		
-		int[] diagonal = new int[diagonalSize];
-		
-		if (leftOrRight == "left"){
-			for(int colIt = 0 ; colIt < columns; colIt++){
-				int coinToGet = 3+diaNumber+colIt;
-				if (!((coinToGet > rows) || (coinToGet < 0))){
-					Column currentColumn = this.board[colIt];
-					diagonal[colIt] = currentColumn.get(coinToGet);
-				}
-			}
-		}
-		
-		else if (leftOrRight == "right"){
-			for(int colIt = 0 ; colIt < columns; colIt++){
-				int coinToGet = 3+diaNumber+colIt;
-				if (!((coinToGet > rows) || (coinToGet < 0))){
-					Column currentColumn = this.board[colIt];
-					diagonal[colIt] = currentColumn.get(coinToGet);
-				}
-			}
-		}
-		return diagonal;
-	}
-	
 
 	public int[] getLeftDiagonal(int diaNumber){
 		int diagonalSize;
@@ -157,12 +126,14 @@ public class Board implements Cloneable{
 			diagonalSize = rows;
 		else
 			diagonalSize = columns;
-		
+				
 		int[] diagonal = new int[diagonalSize];
 		
-		for(int colIt = 0 ; colIt < columns; colIt++){
-			int coinToGet = 3+diaNumber+colIt;
-			if (!((coinToGet > rows) || (coinToGet < 0))){
+		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
+			
+			int coinToGet = colIt+rows-4-diaNumber;
+			
+			if (!((coinToGet >= rows) || (coinToGet < 0))){
 				Column currentColumn = this.board[colIt];
 				diagonal[colIt] = currentColumn.get(coinToGet);
 			}
@@ -181,9 +152,9 @@ public class Board implements Cloneable{
 		
 		int[] diagonal = new int[diagonalSize];
 		
-		for(int colIt = 0 ; colIt < columns; colIt++){
-			int coinToGet = 3+diaNumber+colIt;
-			if (!((coinToGet > rows) || (coinToGet < 0))){
+		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
+			int coinToGet = diaNumber+4-colIt;
+			if (!((coinToGet >= rows) || (coinToGet < 0))){
 				Column currentColumn = this.board[colIt];
 				diagonal[colIt] = currentColumn.get(coinToGet);
 			}
