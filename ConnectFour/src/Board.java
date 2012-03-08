@@ -189,11 +189,6 @@ public class Board implements Cloneable{
 		return diagonal;
 	}
 
-	
-	public int[] getLeftDiagonal(int diaNumber){
-		
-	}
-	
  	public int diagonalCount(){
 		return rows+columns-7;
 	}
