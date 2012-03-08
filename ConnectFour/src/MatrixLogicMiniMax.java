@@ -3,6 +3,7 @@
 public class MatrixLogicMiniMax {
 	int counter =0;
 	int cutoff=100000;
+	int winCondition=2;
 	
 	public MatrixLogicMiniMax(){
 	}
@@ -32,6 +33,7 @@ public class MatrixLogicMiniMax {
 		int v = Integer.MIN_VALUE;
 		for (int a:Actions(board)){
 			v=Max(v,MinValue((Result(board,a,1))));
+			System.out.println("Attempting this:"+Result(board,a,1));
 			if(counter>cutoff){break;}
 		}
 		return v;
@@ -44,6 +46,7 @@ public class MatrixLogicMiniMax {
 		int v = Integer.MAX_VALUE;
 		for (int a:Actions(board)){
 			v=Min(v,MaxValue((Result(board,a,-1))));
+			System.out.println("Attempting this:\n"+Result(board,a,1));
 			if(counter>cutoff){break;}
 		}
 		return v;
@@ -96,50 +99,43 @@ public class MatrixLogicMiniMax {
 	}
 	
 	boolean TerminalTest(Board board){
-		if(board.isFull()) return true;
-	  	for(int col=0;col<board.colCount();col++){
-    		if(Math.abs(calcSum(board.getColumn(col)))>=4)
-    			return true;}    	
-    	for(int row=0;row<board.rowCount();row++){
-    		if(Math.abs(calcSum(board.getRow(row)))>=4)
-    			return true;}    		
-        return false;
+		return Utility(board)!=99;
 	}
 	
 	int Utility(Board board){
     	for(int col=0;col<board.colCount();col++){
-    		if(calcSum(board.getColumn(col))>=4){
+    		if(calcSum(board.getColumn(col))>=winCondition){
     			return 1;
     		}
-    		if(calcSum(board.getColumn(col))<=-4){
+    		if(calcSum(board.getColumn(col))<=-winCondition){
     			return -1;
     		}
     		
     	}
     	
     	for(int row=0;row<board.rowCount();row++){
-    		if(calcSum(board.getRow(row))>=4){
+    		if(calcSum(board.getRow(row))>=winCondition){
     			return 1;
     		}
-    		if(calcSum(board.getRow(row))<=-4){
+    		if(calcSum(board.getRow(row))<=-winCondition){
     			return -1;
     		}
     	
         for(int leftDiagonal=0; leftDiagonal < board.diagonalCount();leftDiagonal++){
-        	if(calcSum(board.getLeftDiagonal(leftDiagonal))>=4){
+        	if(calcSum(board.getLeftDiagonal(leftDiagonal))>=winCondition){
         		return 1;
         	}
-        	if(calcSum(board.getLeftDiagonal(leftDiagonal))<=-4){
+        	if(calcSum(board.getLeftDiagonal(leftDiagonal))<=-winCondition){
         		return -1;
         	}
         		
         }
         
         for(int rightDiagonal=0; rightDiagonal < board.diagonalCount();rightDiagonal++){
-        	if(calcSum(board.getRightDiagonal(rightDiagonal))>=4){
+        	if(calcSum(board.getRightDiagonal(rightDiagonal))>=winCondition){
         		return 1;
         	}
-        	if(calcSum(board.getRightDiagonal(rightDiagonal))<=-4){
+        	if(calcSum(board.getRightDiagonal(rightDiagonal))<=-winCondition){
         		return -1;
         	}
         		
