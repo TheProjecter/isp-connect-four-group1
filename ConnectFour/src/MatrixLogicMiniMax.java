@@ -31,7 +31,7 @@ public class MatrixLogicMiniMax {
 		}
 		int v = Integer.MIN_VALUE;
 		for (int a:Actions(board)){
-			if(counter>4000) return v;
+			if(counter>10000) return v;
 			v=Max(v,MinValue((Result(board,a,1))));
 		}
 		return v;
@@ -45,7 +45,7 @@ public class MatrixLogicMiniMax {
 		}
 		int v = Integer.MAX_VALUE;
 		for (int a:Actions(board)){
-			if(counter>90000) return v;
+			if(counter>10000) return v;
 			v=Min(v,MaxValue((Result(board,a,-1))));
 		}
 		return v;
