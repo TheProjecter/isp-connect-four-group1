@@ -2,6 +2,7 @@
 
 public class MatrixLogicMiniMax {
 	int counter =0;
+	int cutoff=2;
 	
 	public MatrixLogicMiniMax(){
 	}
@@ -9,15 +10,16 @@ public class MatrixLogicMiniMax {
 		int v=Integer.MIN_VALUE;
 		int choice=0;
 		for (int a: Actions(board)){
-			System.out.println("Playing branch: "+a);
-			if(MinValue(Result(board,a,1))>v){
-				v=MinValue(Result(board,a,1));
+			int b=Max(v,MinValue((Result(board,a,1))));
+			if(b>v) {
+				v=b;
 				choice=a;
-			}
-			}
+				}
+		}
 		System.out.println("After "+counter+" evaluations.");
 		counter=0;
 		System.out.println("I have chosen to play: "+choice);
+		System.out.println("For a best outcome of: "+v);
 		return choice;
 	}
 	
@@ -29,9 +31,10 @@ public class MatrixLogicMiniMax {
 		}
 		int v = Integer.MIN_VALUE;
 		for (int a:Actions(board)){
-			if(counter>10000) return v;
 			v=Max(v,MinValue((Result(board,a,1))));
+			if(counter>cutoff) return v;
 		}
+		System.out.println("For a best maxval of"+v);
 		return v;
 	}
 	int MinValue(Board board){
@@ -41,9 +44,10 @@ public class MatrixLogicMiniMax {
 		}
 		int v = Integer.MAX_VALUE;
 		for (int a:Actions(board)){
-			if(counter>10000) return v;
 			v=Min(v,MaxValue((Result(board,a,-1))));
+			if(counter>cutoff) return v;
 		}
+		System.out.println("For a best minval of"+v);
 		return v;
 	}
 	
