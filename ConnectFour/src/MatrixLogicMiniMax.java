@@ -104,6 +104,26 @@ public class MatrixLogicMiniMax {
     		if(MatrixLogic.calcSum(board.getRow(row))<=-4){
     			return -1;
     		}
+    	
+        	for(int leftDiagonal=0; leftDiagonal < board.diagonalCount();leftDiagonal++){
+        		if(MatrixLogic.calcSum(board.getLeftDiagonal(leftDiagonal))>=4){
+        			return 1;
+        		}
+        		if(MatrixLogic.calcSum(board.getLeftDiagonal(leftDiagonal))<=-4){
+        			return -1;
+        		}
+        		
+        	}
+        	
+        	for(int rightDiagonal=0; rightDiagonal < board.diagonalCount();rightDiagonal++){
+        		if(MatrixLogic.calcSum(board.getRightDiagonal(rightDiagonal))>=4){
+        			return 1;
+        		}
+        		if(MatrixLogic.calcSum(board.getRightDiagonal(rightDiagonal))<=-4){
+        			return -1;
+        		}
+        		
+        	}
     		
     	}
     	if(board.isFull()) return 0;
