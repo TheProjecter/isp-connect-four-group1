@@ -29,8 +29,10 @@ public class MatrixLogicMiniMax {
 	}
 	int MinValue(Board board){
 		if(TerminalTest(board)) return Utility(board);
+		System.out.println("This board is not terminal:\n"+board);
 		int v = Integer.MAX_VALUE;
 		for (int a:Actions(board)){
+			System.out.println("Attempting to play col:"+a);
 			v=Min(v,MaxValue((Result(board,a,1))));
 		}
 		return v;
