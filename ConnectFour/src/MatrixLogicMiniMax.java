@@ -2,8 +2,8 @@
 
 public class MatrixLogicMiniMax {
 	int counter =0;
-	int cutoff=100000;
-	int winCondition=2;
+	int cutoff=1000000;
+	int winCondition=4;
 	
 	public MatrixLogicMiniMax(){
 	}
@@ -33,7 +33,6 @@ public class MatrixLogicMiniMax {
 		int v = Integer.MIN_VALUE;
 		for (int a:Actions(board)){
 			v=Max(v,MinValue((Result(board,a,1))));
-			System.out.println("Attempting this:"+Result(board,a,1));
 			if(counter>cutoff){break;}
 		}
 		return v;
@@ -46,7 +45,6 @@ public class MatrixLogicMiniMax {
 		int v = Integer.MAX_VALUE;
 		for (int a:Actions(board)){
 			v=Min(v,MaxValue((Result(board,a,-1))));
-			System.out.println("Attempting this:\n"+Result(board,a,1));
 			if(counter>cutoff){break;}
 		}
 		return v;
