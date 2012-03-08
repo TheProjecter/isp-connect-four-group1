@@ -1,46 +1,53 @@
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
 
 
 public class MatrixLogicMiniMax {
-	
-	int c=0;
-	int dybde=0;
+	int counter =0;
 	
 	public MatrixLogicMiniMax(){
 	}
 	int MinimaxDecision(Board board){
 		int v=Integer.MIN_VALUE;
-		dybde++;
+		int choice=0;
 		for (int a: Actions(board)){
 			System.out.println("Playing branch: "+a);
-			v=Max(v,MinValue((Result(board,a,1))));
+			if(MinValue(Result(board,a,1))>v){
+				v=MinValue(Result(board,a,1));
+				choice=a;
 			}
-		dybde--;
-		return v;
+			}
+		System.out.println("After "+counter+" evaluations.");
+		counter=0;
+		System.out.println("I have chosen to play: "+choice);
+		return choice;
 	}
 	
 	
 	int MaxValue(Board board){
+		counter++;
+		System.out.println("Calculating Maxval for:\n"+board);
 		if(TerminalTest(board)) {
+			System.out.println("This bord is terminal. It has utility :" + Utility(board));
 			return Utility(board);
 		}
 		int v = Integer.MIN_VALUE;
-		dybde++;
 		for (int a:Actions(board)){
+			if(counter>4000) return v;
 			v=Max(v,MinValue((Result(board,a,1))));
 		}
-		dybde--;
 		return v;
 	}
 	int MinValue(Board board){
-		if(TerminalTest(board)) return Utility(board);
+		counter++;
+		System.out.println("Calculating Minval for:\n"+board);
+		if(TerminalTest(board)){
+			System.out.println("This bord is terminal. It has utility :" + Utility(board));
+			return Utility(board);
+		}
 		int v = Integer.MAX_VALUE;
-		dybde++;
 		for (int a:Actions(board)){
+			if(counter>90000) return v;
 			v=Min(v,MaxValue((Result(board,a,-1))));
 		}
-		dybde--;
 		return v;
 	}
 	
@@ -59,17 +66,18 @@ public class MatrixLogicMiniMax {
 	
 	//The resulting board of playerID adding to a column a in a board s
 	Board Result(Board org,int a,int playerID){
-		c+=1;
-		if(c>1000) System.exit(-1);
 		Board board = (Board) org.clone();
 		board.add(a, playerID);
-		System.out.println(dybde);
 		return board;
 	}
 	
 	
 	//Actions returns the number of the playable cols
 	int[] Actions(Board board){
+		System.out.println("I can play");
+		for(int i:board.openColums()){
+			System.out.println(i);
+		}
 		return board.openColums();
 	}
 	
