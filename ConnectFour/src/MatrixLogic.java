@@ -34,6 +34,9 @@ public class MatrixLogic implements IGameLogic {
 		int sum=0;
 		int max=0;
 		for (int i=0;i<N.length;i++){
+			if(N[i]==0){
+				sum=0;
+			}
 			if(sum>=0 && N[i]>0)
 				sum+=1;
 			else if(sum<0 && N[i]>0)
