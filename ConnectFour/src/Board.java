@@ -5,12 +5,12 @@ public class Board implements Cloneable{
 	private int rows = 0;
 	private int columns = 0;
 	
-	public Board(int x, int y){
-		this.board = new Column[x];
-		this.rows = y;
-		this.columns =x;
-		for (int i=0;i<x;i++){
-			this.board[i]=new Column(y);
+	public Board(int column, int row){
+		this.board = new Column[column];
+		this.rows = row;
+		this.columns = column;
+		for (int i=0;i<column;i++){
+			this.board[i]=new Column(row);
 		}
 	}
 	
@@ -122,10 +122,12 @@ public class Board implements Cloneable{
 	public int[] getLeftDiagonal(int diaNumber){
 		int diagonalSize;
 		
-		if (rows>columns)
+		if (rows<columns)
 			diagonalSize = rows;
 		else
 			diagonalSize = columns;
+		
+
 				
 		int[] diagonal = new int[diagonalSize];
 		
@@ -138,20 +140,20 @@ public class Board implements Cloneable{
 				diagonal[colIt] = currentColumn.get(coinToGet);
 			}
 		}
-		
 		return diagonal;
 	}		
 
 	public int[] getRightDiagonal(int diaNumber){
 		int diagonalSize;
 		
-		if (rows>columns)
+		if (rows<columns)
 			diagonalSize = rows;
 		else
 			diagonalSize = columns;
 		
-		int[] diagonal = new int[diagonalSize];
 		
+		int[] diagonal = new int[diagonalSize];
+
 		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
 			int coinToGet = diaNumber+3-colIt;
 			if (!((coinToGet >= rows) || (coinToGet < 0))){
