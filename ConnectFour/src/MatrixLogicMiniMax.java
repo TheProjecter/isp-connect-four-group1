@@ -24,9 +24,7 @@ public class MatrixLogicMiniMax {
 	
 	int MaxValue(Board board){
 		counter++;
-		System.out.println("Calculating Maxval for:\n"+board);
 		if(TerminalTest(board)) {
-			System.out.println("This bord is terminal. It has utility :" + Utility(board));
 			return Utility(board);
 		}
 		int v = Integer.MIN_VALUE;
@@ -38,9 +36,7 @@ public class MatrixLogicMiniMax {
 	}
 	int MinValue(Board board){
 		counter++;
-		System.out.println("Calculating Minval for:\n"+board);
-		if(TerminalTest(board)){
-			System.out.println("This bord is terminal. It has utility :" + Utility(board));
+		if(TerminalTest(board)){		
 			return Utility(board);
 		}
 		int v = Integer.MAX_VALUE;
@@ -74,10 +70,6 @@ public class MatrixLogicMiniMax {
 	
 	//Actions returns the number of the playable cols
 	int[] Actions(Board board){
-		System.out.println("I can play");
-		for(int i:board.openColums()){
-			System.out.println(i);
-		}
 		return board.openColums();
 	}
 	
