@@ -41,7 +41,15 @@ public class MatrixLogic implements IGameLogic {
 
     public int decideNextMove() {
         //TODO Write your implementation for this method
-    	return minmax.ABsearch(this.board);
+    	System.out.println("Col 1 looks like:");
+    	for(int i:board.getColumn(0)){
+    		System.out.println(i);
+    	}
+    	System.out.println("It has calcSum: "+stateEval.calcSum(board.getColumn(0)));
+    	return filltest();
+    	
+    	
+    	//return minmax.ABsearch(this.board);
 
     }
     
