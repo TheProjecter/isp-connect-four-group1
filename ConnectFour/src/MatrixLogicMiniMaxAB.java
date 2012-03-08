@@ -121,6 +121,7 @@ public class MatrixLogicMiniMaxAB {
     		if(calcSum(board.getRow(row))<=-winCondition){
     			return -1;
     		}
+    	}
     	
         for(int leftDiagonal=0; leftDiagonal < board.diagonalCount();leftDiagonal++){
         	if(calcSum(board.getLeftDiagonal(leftDiagonal))>=winCondition){
@@ -142,7 +143,7 @@ public class MatrixLogicMiniMaxAB {
         		
        	}
     		
-    	}
+    	
     	if(board.isFull()) return 0;
 		return 99;
 	}
