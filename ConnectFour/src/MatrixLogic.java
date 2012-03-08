@@ -4,7 +4,7 @@ public class MatrixLogic implements IGameLogic {
     private int y = 0;
     private int playerID;
     private Board board = new Board(0,0);
-    private MatrixLogicMiniMax minmax = new MatrixLogicMiniMax();
+    private MatrixLogicMiniMaxAB minmax = new MatrixLogicMiniMaxAB();
     
     public MatrixLogic() {
         //TODO Write your implementation for this method
@@ -41,8 +41,16 @@ public class MatrixLogic implements IGameLogic {
 
     public int decideNextMove() {
         //TODO Write your implementation for this method
-    	return minmax.MinimaxDecision(this.board);
+    	return minmax.ABsearch(this.board);
 
     }
+    
+    public int filltest(){
+       	if(this.board.board[3].isFull())
+    		return 1;
+    	return 3;
+    	
+    }
+    
 
 }
