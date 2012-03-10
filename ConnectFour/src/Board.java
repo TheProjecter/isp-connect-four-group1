@@ -4,6 +4,7 @@ public class Board implements Cloneable{
 	public Column[] board = new Column[0];
 	private int rows = 0;
 	private int columns = 0;
+	private int winCondition = 4;
 	
 	public Board(int column, int row){
 		this.board = new Column[column];
@@ -65,61 +66,19 @@ public class Board implements Cloneable{
 		this.board[col].add(PlayerID);
 	}
 	
-	public int[] getColumn(int x){
+	public Coin[] getColumn(int x){
 		return this.board[x].col;
 	}
 
-	public int[] getRow(int x){
-		int[] row = new int[this.colCount()];
+	public Coin[] getRow(int x){
+		Coin[] row = new Coin[this.colCount()];
 		for (int i =0;i<board.length;i++){
 			row[i] = board[i].col[x];
 		}
 		return row;
 	}
-	
-	public int[][] getDiagonals(String leftOrRight){
-		int diagonalSize;
-		
-		if (rows>columns)
-			diagonalSize = rows;
-		else
-			diagonalSize = columns;
-		
-		int diagonalCount = rows+columns-7; 
-		
-		int[][] diagonals = new int[diagonalCount][diagonalSize];
-		if (leftOrRight == "left"){
-			int start = columns-4;
-			int stop = 4-rows;
-			for(int diaIt = start ; diaIt <= stop ; diaIt--){
-				for(int colIt = 0 ; colIt < columns; colIt++){
-					int coinToGet = diaIt+colIt;
-					if (!((coinToGet > rows) || (coinToGet < 0))){
-						Column currentColumn = this.board[colIt];
-						diagonals[diaIt][colIt] = currentColumn.get(coinToGet);
-					}
-				}
-			}
-		}
-		
-		else if (leftOrRight == "right"){
-			int start = 3;
-			int stop = rows+columns-5;
-			for(int diaIt = start; diaIt <= stop ; diaIt++){
-				for(int colIt = 0 ; colIt < columns; colIt++){
-					int coinToGet = diaIt+colIt;
-					if (!((coinToGet > rows) || (coinToGet < 0))){
-						Column currentColumn = this.board[colIt];
-						diagonals[diaIt][colIt] = currentColumn.get(coinToGet);
-					}
-				}
-			}
-		}
-		return diagonals;
-	}
-		
 
-	public int[] getLeftDiagonal(int diaNumber){
+	public Coin[] getLeftDiagonal(int diaNumber){
 		int diagonalSize;
 		
 		if (rows<columns)
@@ -129,11 +88,11 @@ public class Board implements Cloneable{
 		
 
 				
-		int[] diagonal = new int[diagonalSize];
+		Coin[] diagonal = new Coin[diagonalSize];
 		
 		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
 			
-			int coinToGet = colIt+rows-4-diaNumber;
+			int coinToGet = colIt+rows-winCondition-diaNumber;
 			
 			if (!((coinToGet >= rows) || (coinToGet < 0))){
 				Column currentColumn = this.board[colIt];
@@ -143,7 +102,7 @@ public class Board implements Cloneable{
 		return diagonal;
 	}		
 
-	public int[] getRightDiagonal(int diaNumber){
+	public Coin[] getRightDiagonal(int diaNumber){
 		int diagonalSize;
 		
 		if (rows<columns)
@@ -152,10 +111,10 @@ public class Board implements Cloneable{
 			diagonalSize = columns;
 		
 		
-		int[] diagonal = new int[diagonalSize];
+		Coin[] diagonal = new Coin[diagonalSize];
 
 		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
-			int coinToGet = diaNumber+3-colIt;
+			int coinToGet = diaNumber+(winCondition-1)-colIt;
 			if (!((coinToGet >= rows) || (coinToGet < 0))){
 				Column currentColumn = this.board[colIt];
 				diagonal[colIt] = currentColumn.get(coinToGet);
@@ -164,8 +123,36 @@ public class Board implements Cloneable{
 		return diagonal;
 	}
 
+	public Coin[] getCertain(int x, String Certain){
+//		switch (Certain){
+//        case "row":
+//        return getRow(x);
+//        case "column":
+//        return getColumn(x);
+//        case "rightDiagonal":
+//        return getRightDiagonal(x);
+//        case "leftDiagonal":
+//        return getLeftDiagonal(x);
+//		}
+		return null;
+	}
+
+	int certainCount(String Certain){
+//		switch (Certain){
+//        case "row":
+//        return rowCount();
+//        case "column":
+//        return colCount();
+//        case "rightDiagonal":
+//        return diagonalCount();
+//        case "leftDiagonal":
+//        return diagonalCount();
+//		}
+		return -1;
+	}	
+	
  	public int diagonalCount(){
-		return rows+columns-7;
+		return rows+columns-2*(winCondition-1)+1;
 	}
 	
 	int rowCount(){
@@ -176,53 +163,4 @@ public class Board implements Cloneable{
 		return this.columns;
 	}
 	
-	
-	
-	public class Column implements Cloneable{
-		int[] col = new int[0];
-		int N=0;
-		
-				
-		public Column(int y){
-			this.col = new int[y];
-			this.N = 0;
-		}
-		
-		@Override
-		protected Object clone(){
-			Column clone = new Column(this.col.length); 
-			for (int i=0;i<this.col.length;i++){
-				clone.col[i] =this.col[i];
-					if(this.col[i]!=0)clone.N+=1;
-			}
-			
-			return clone;
-		}
-		
-		public String toString(){
-			String n="";
-			for (int i:col){
-				n+=i+"\n";
-			}
-			return n;
-		}
-		
-		boolean isFull(){
-			return N==col.length;
-		}
-		
-		void add(int PlayerID){
-			if(!this.isFull()){
-				col[N]=PlayerID;
-				N++;				
-			}
-			
-		}
-		
-		int get(int place){
-			return col[place];
-		}
-				
 	}
-
-}
