@@ -6,11 +6,12 @@ public class MatrixLogicMiniMax {
 	
 	public MatrixLogicMiniMax(){
 	}
+
 	int MinimaxDecision(Board board){
 		int v=Integer.MIN_VALUE;
 		int choice=0;
-		for (int a: stateEval.Actions(board)){
-			int b=stateEval.Max(v,MinValue((stateEval.Result(board,a,1))));
+		for (int a: ToolSet.Actions(board)){
+			int b=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1))));
 			if(b>v) {
 				v=b;
 				choice=a;
@@ -22,33 +23,32 @@ public class MatrixLogicMiniMax {
 		System.out.println("For an expected outcome of: "+v);
 		return choice;
 	}
-	
-	
+		
 	int MaxValue(Board board){
 		counter++;
-		if(stateEval.TerminalTest(board)) {
-			return stateEval.Utility(board);
-		}
+
+		State test = new State(board);
+		if(test.isTerminal()) return test.getUtility();
+
 		int v = Integer.MIN_VALUE;
-		for (int a:stateEval.Actions(board)){
-			v=stateEval.Max(v,MinValue((stateEval.Result(board,a,1))));
+		for (int a:ToolSet.Actions(board)){
+			v=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1))));
 			if(counter>cutoff){break;}
 		}
 		return v;
 	}
+
 	int MinValue(Board board){
 		counter++;
-		if(stateEval.TerminalTest(board)){		
-			return stateEval.Utility(board);
-		}
+		
+		State test = new State(board);
+		if(test.isTerminal()) return test.getUtility();
+
 		int v = Integer.MAX_VALUE;
-		for (int a:stateEval.Actions(board)){
-			v=stateEval.Min(v,MaxValue((stateEval.Result(board,a,-1))));
+		for (int a:ToolSet.Actions(board)){
+			v=ToolSet.Min(v,MaxValue((ToolSet.Result(board,a,-1))));
 			if(counter>cutoff){break;}
 		}
 		return v;
 	}
-	
-
-
 }
