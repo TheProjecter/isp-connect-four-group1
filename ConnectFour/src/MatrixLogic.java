@@ -1,7 +1,8 @@
 
 public class MatrixLogic implements IGameLogic {
     private Board board = new Board(0,0);
-    private MatrixLogicMiniMaxABTT minmax = new MatrixLogicMiniMaxABTT();
+    private MatrixLogicMiniMaxAB minmax = new MatrixLogicMiniMaxAB();
+    private int playerID;
     
     public MatrixLogic() {
         //TODO Write your implementation for this method
@@ -9,6 +10,7 @@ public class MatrixLogic implements IGameLogic {
 	
     public void initializeGame(int x, int y, int playerID) {
         this.board = new Board(x,y);
+        this.playerID = playerID;
     }
 	
     public Winner gameFinished() {
@@ -32,6 +34,7 @@ public class MatrixLogic implements IGameLogic {
     }
 
     public int decideNextMove() {
+		System.out.println("Thinking...");
     	return minmax.ABsearch(this.board);
     }
 }
