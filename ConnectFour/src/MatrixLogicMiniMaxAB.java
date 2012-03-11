@@ -3,7 +3,7 @@
 
 public class MatrixLogicMiniMaxAB {
 	int counter =0;
-	int cutoff = 10;
+	int cutoff = 8;
 	int evals = 0;
 	int depth = 0;
 	boolean wasCut = false;
