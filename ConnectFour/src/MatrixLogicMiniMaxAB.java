@@ -2,7 +2,8 @@
 
 public class MatrixLogicMiniMaxAB {
 	int counter =0;
-	int cutoff = 1000;
+	int cutoff = 10;
+	boolean wasCut = false;
 	int winCondition = 4;
 	
 	public MatrixLogicMiniMaxAB(){
@@ -10,6 +11,7 @@ public class MatrixLogicMiniMaxAB {
 
 	int ABsearch(Board board){
 			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
+			if(wasCut) v=0;
 			int choice = 0;
 			
 			for (int a: ToolSet.Actions(board)){
@@ -30,16 +32,14 @@ public class MatrixLogicMiniMaxAB {
 		counter++;
 		
 		State test = new State(board);
-		if(test.isTerminal()) {
-			System.out.println(test.getUtility());
-			return test.getUtility();}
-		
+		if(test.isTerminal()) return test.getUtility();
+	
 		int v = Integer.MIN_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			v=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1)),alpha,beta));
 			if(v>=beta){return v;}
 			alpha=ToolSet.Max(alpha,v);
-			if(counter>cutoff){break;}
+			if(counter>cutoff){wasCut=true;return v;}
 		}
 		
 		return v;
@@ -56,7 +56,7 @@ public class MatrixLogicMiniMaxAB {
 			v=ToolSet.Min(v,MaxValue((ToolSet.Result(board,a,-1)),alpha,beta));
 			if(v<=alpha){return v;}
 			beta = ToolSet.Min(beta,v);
-			if(counter>cutoff){break;}
+			if(counter>cutoff){wasCut=true;return v;}
 		}
 		
 		return v;
