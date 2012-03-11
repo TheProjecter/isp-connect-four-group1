@@ -25,7 +25,7 @@ public class MiniMaxABDepthFirst {
 							}
 							if(crisis){
 								choice=lastresort;
-								System.out.println("This move is a crisis move. If my opponent is any good he will win after this, but not instantly.");
+								System.out.println("This move is a crisis move. I leave more space for my opponent, but avoids an instant win.");
 							}
 						}
 					}
