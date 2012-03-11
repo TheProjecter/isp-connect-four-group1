@@ -1,4 +1,3 @@
-import java.util.Hashtable;
 
 
 
@@ -6,9 +5,6 @@ public class MatrixLogicMiniMaxAB {
 	int counter =0;
 	int cutoff = 20000000;
 	boolean wasCut = false;
-	int winCondition = 4;
-	public static Hashtable<Board, State> TransTableMax = new Hashtable<Board, State>();
-	public static Hashtable<Board, State> TransTableMin = new Hashtable<Board, State>();
 	
 	public MatrixLogicMiniMaxAB(){
 	}
@@ -62,13 +58,9 @@ public class MatrixLogicMiniMaxAB {
 	int MaxValue(Board board,int alpha,int beta){
 		counter++;
 		
-		if(TransTableMax.containsKey(board)){
-			return TransTableMax.get(board).getUtility();
-		}
 		
 		State test = new State(board);
 		if(test.isTerminal()){
-			TransTableMax.put(board, test);
 			return test.getUtility();
 		}
 	
@@ -94,13 +86,8 @@ public class MatrixLogicMiniMaxAB {
 	int MinValue(Board board,int alpha,int beta){
 		counter++;
 		
-		if(TransTableMin.containsKey(board)){
-			return TransTableMin.get(board).getUtility();
-		}
-		
 		State test = new State(board);
 		if(test.isTerminal()) {
-			TransTableMin.put(board, test);
 			return test.getUtility();
 		}
 		
