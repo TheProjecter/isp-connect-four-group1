@@ -1,3 +1,5 @@
+import java.util.Hashtable;
+
 
 
 public class MatrixLogicMiniMaxAB {
@@ -5,6 +7,8 @@ public class MatrixLogicMiniMaxAB {
 	int cutoff = 200000;
 	boolean wasCut = false;
 	int winCondition = 4;
+	public static Hashtable<Board, State> TransTableMax = new Hashtable<Board, State>();
+	public static Hashtable<Board, State> TransTableMin = new Hashtable<Board, State>();
 	
 	public MatrixLogicMiniMaxAB(){
 	}
@@ -21,7 +25,7 @@ public class MatrixLogicMiniMaxAB {
 						//Vi bliver nødt til at spille efter den maksimale af de udregnede minvals.
 						//Hele pointen med cut-off er at vi ikke kan tjekke alle de følgende muligheder. Men vi kan da tjekke
 						//Det næste niveau og sikre os at man ikke spiller et spil der giver modstanderen sejr i næste træk.
-						if(!nextLoose(ToolSet.Result(board,a,1)));{
+						if(!nextLoose(ToolSet.Result(board,a,1))){
 							v=ToolSet.Max(v, b);
 							if(b==v) {
 									choice=a;
@@ -48,8 +52,8 @@ public class MatrixLogicMiniMaxAB {
 	 */
 	boolean nextLoose(Board board){
 		boolean opWin=false;
-		for (int a1: ToolSet.Actions(board)){
-			State s= new State(ToolSet.Result(board, a1, -1));
+		for (int a: ToolSet.Actions(board)){
+			State s= new State(ToolSet.Result(board, a, -1));
 			if(s.getUtility()==-1) opWin=true;
 		}
 		return opWin;
@@ -58,15 +62,30 @@ public class MatrixLogicMiniMaxAB {
 	int MaxValue(Board board,int alpha,int beta){
 		counter++;
 		
+		if(TransTableMax.containsKey(board)){
+			return TransTableMax.get(board).getUtility();
+		}
+		
 		State test = new State(board);
-		if(test.isTerminal()) return test.getUtility();
+		if(test.isTerminal()){
+			TransTableMax.put(board, test);
+			return test.getUtility();
+		}
 	
 		int v = Integer.MIN_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			v=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1)),alpha,beta));
-			if(v>=beta){return v;}
+			
+			if(v>=beta){
+				return v;
+			}
+			
 			alpha=ToolSet.Max(alpha,v);
-			if(counter>cutoff){wasCut=true;return v;}
+			
+			if(counter>cutoff){
+				wasCut=true;
+				return v;
+				}
 		}
 		
 		return v;
@@ -75,8 +94,15 @@ public class MatrixLogicMiniMaxAB {
 	int MinValue(Board board,int alpha,int beta){
 		counter++;
 		
+		if(TransTableMin.containsKey(board)){
+			return TransTableMin.get(board).getUtility();
+		}
+		
 		State test = new State(board);
-		if(test.isTerminal()) return test.getUtility();
+		if(test.isTerminal()) {
+			TransTableMin.put(board, test);
+			return test.getUtility();
+		}
 		
 		int v = Integer.MAX_VALUE;
 		for (int a:ToolSet.Actions(board)){
