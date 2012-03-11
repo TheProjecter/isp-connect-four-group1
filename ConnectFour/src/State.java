@@ -5,6 +5,10 @@ public class State {
 	public State(Board board){
 		utility = utility(board);
 	}
+	
+	public State(int util){
+		this.utility = (byte) util;
+	}
 
 	/**
 	 * Returns the winner of the board.
