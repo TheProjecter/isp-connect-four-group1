@@ -1,6 +1,5 @@
 
 public class MatrixLogic implements IGameLogic {
-    private int playerID;
     private Board board = new Board(0,0);
     private MatrixLogicMiniMaxAB minmax = new MatrixLogicMiniMaxAB();
     
@@ -9,7 +8,6 @@ public class MatrixLogic implements IGameLogic {
     }
 	
     public void initializeGame(int x, int y, int playerID) {
-        this.playerID = playerID;
         this.board = new Board(x,y);
     }
 	
