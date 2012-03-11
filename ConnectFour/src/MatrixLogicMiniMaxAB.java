@@ -2,7 +2,7 @@
 
 public class MatrixLogicMiniMaxAB {
 	int counter =0;
-	int cutoff = 0;
+	int cutoff = 1000;
 	int winCondition = 4;
 	
 	public MatrixLogicMiniMaxAB(){
@@ -30,7 +30,9 @@ public class MatrixLogicMiniMaxAB {
 		counter++;
 		
 		State test = new State(board);
-		if(test.isTerminal()) return test.getUtility();
+		if(test.isTerminal()) {
+			System.out.println(test.getUtility());
+			return test.getUtility();}
 		
 		int v = Integer.MIN_VALUE;
 		for (int a:ToolSet.Actions(board)){

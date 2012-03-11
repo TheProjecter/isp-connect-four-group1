@@ -5,15 +5,12 @@ public class State {
 	public State(Board board){
 		utility = utility(board);
 	}
-	
-	private byte utilityHelper (String method, Board board){
-		for(int utilIt=0;utilIt<board.certainCount(method);utilIt++){
-    		byte utilWin = calcWinner(board.getCertain(utilIt, method));
-    		if(utilWin!=0) return utilWin;
-    	}
-		return 0;
-	}
-	
+
+	/**
+	 * Returns the winner of the board.
+	 * @param board
+	 * @return
+	 */
 	private byte utility(Board board){
     	for(int col=0;col<board.colCount();col++){
     		byte colWin = calcWinner(board.getColumn(col));
@@ -40,14 +37,27 @@ public class State {
 		return 99;
 	}
 	
+	/**
+	 * Determines whether the board is terminal.
+	 * @return
+	 */
 	public boolean isTerminal(){
 		return utility != 99;
 	}
 	
+	/**
+	 * Wrapper for the utility function.
+	 * @return
+	 */
 	public byte getUtility(){
 		return utility;
 	}
 	
+	/**
+	 * Checks a given Coin array for a winning combination.
+	 * @param coinArr
+	 * @return
+	 */
 	private byte calcWinner(Coin[] coinArr){
 		int oneSum=0;
 		int twoSum=0;
@@ -64,8 +74,8 @@ public class State {
 				}
 			
 			else if(coin.isPlayerTwo()){
-				twoSum++;
 				oneSum=0;
+				twoSum++;
 				if(twoSum==(winCondition)) return (byte) -1;
 				}
 		}

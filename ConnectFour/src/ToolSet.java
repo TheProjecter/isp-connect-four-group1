@@ -1,6 +1,5 @@
 
 public class ToolSet {
-	static int winCondition=4;
 
 	
 	
