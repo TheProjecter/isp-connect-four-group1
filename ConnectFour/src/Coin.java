@@ -25,5 +25,15 @@ protected Object clone(){
 	else return new Coin(2);
 }
 
+public boolean equals(Object object) {
+    if (object == null) return(false); //Null reference pointer, return false
+    if (object == this) return(true); //Same object, return true
+    if (!(object instanceof Coin)) return(false); //Not same class, return false
+
+    Coin C = (Coin) object; //Cast to Board
+    
+    return (C.isPlayerOne()==this.playerOne);
+}
+
 
 }
