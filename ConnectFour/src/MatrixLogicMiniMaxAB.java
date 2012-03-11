@@ -3,7 +3,7 @@
 
 public class MatrixLogicMiniMaxAB {
 	int counter =0;
-	int cutoff = 15;
+	int cutoff = 10;
 	int evals = 0;
 	int depth = 0;
 	boolean wasCut = false;
@@ -23,8 +23,6 @@ public class MatrixLogicMiniMaxAB {
 						//Hele pointen med cut-off er at vi ikke kan tjekke alle de følgende muligheder. Men vi kan da tjekke
 						//det næste niveau og sikre os at man ikke spiller et spil der giver modstanderen sejr i næste træk.
 						if(!nextLoose(ToolSet.Result(board,a,1))){
-							System.out.println("This is what the board will be when i play "+a+"\n"+ToolSet.Result(board,a,1));
-							System.out.println("My opponent will not win in the next turn!");
 							v=ToolSet.Max(v, b);
 							if(b==v) {
 									choice=a;
@@ -60,7 +58,7 @@ public class MatrixLogicMiniMaxAB {
 	
 	int MaxValue(Board board,int alpha,int beta){
 		counter++;
-		if(counter>cutoff){depth=counter;return 0;}
+		if(counter>cutoff){depth=counter;wasCut=true;return 0;}
 		evals++;
 		State test = new State(board);
 		if(test.isTerminal())	return test.getUtility();	
@@ -80,7 +78,7 @@ public class MatrixLogicMiniMaxAB {
 	
 	int MinValue(Board board,int alpha,int beta){
 		counter++;
-		if(counter>cutoff){depth=counter;return 0;}
+		if(counter>cutoff){depth=counter;wasCut=true;return 0;}
 		evals++;
 		State test = new State(board);
 		if(test.isTerminal()) return test.getUtility();		
