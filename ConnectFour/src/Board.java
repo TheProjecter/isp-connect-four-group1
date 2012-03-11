@@ -62,9 +62,9 @@ public class Board implements Cloneable{
        return true;
     }
    
-   
-   public double doubleHashCode() {
-	   double hashcode = 0;
+   @Override
+   public int hashCode() {
+	   int hashcode = 0;
 	   int power = 0;
 	   for (int x = 0; x< this.columns; x++) {
 		   
@@ -76,6 +76,7 @@ public class Board implements Cloneable{
     		   else if (this.board[x].col[y].isPlayerTwo())
     			   playerID = 2;
     		   else playerID = 0;
+    		   
     		   hashcode +=  Math.pow(3, power) * playerID;
     		   power++;
     	   }
