@@ -3,7 +3,9 @@
 
 public class MatrixLogicMiniMaxAB {
 	int counter =0;
-	int cutoff = 1000;
+	int cutoff = 15;
+	int evals = 0;
+	int depth = 0;
 	boolean wasCut = false;
 	
 	public MatrixLogicMiniMaxAB(){
@@ -11,7 +13,6 @@ public class MatrixLogicMiniMaxAB {
 
 	int ABsearch(Board board){
 			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
-			System.out.println("MaxVal: "+ v);
 			int choice = ToolSet.Actions(board)[0];
 			
 			for (int a: ToolSet.Actions(board)){
@@ -20,8 +21,10 @@ public class MatrixLogicMiniMaxAB {
 						//Hvis der var et cutoff kan vi ikke regne med at hverken min eller max val er rigtige.
 						//Vi bliver nødt til at spille efter den maksimale af de udregnede minvals.
 						//Hele pointen med cut-off er at vi ikke kan tjekke alle de følgende muligheder. Men vi kan da tjekke
-						//Det næste niveau og sikre os at man ikke spiller et spil der giver modstanderen sejr i næste træk.
+						//det næste niveau og sikre os at man ikke spiller et spil der giver modstanderen sejr i næste træk.
 						if(!nextLoose(ToolSet.Result(board,a,1))){
+							System.out.println("This is what the board will be when i play "+a+"\n"+ToolSet.Result(board,a,1));
+							System.out.println("My opponent will not win in the next turn!");
 							v=ToolSet.Max(v, b);
 							if(b==v) {
 									choice=a;
@@ -33,7 +36,7 @@ public class MatrixLogicMiniMaxAB {
 					}
 			}
 			
-			System.out.println("After "+counter+" evaluations.");
+			System.out.println("At depth "+depth+", after " + evals+" evaluations.");
 			counter=0;
 			wasCut=false;
 			System.out.println("I have chosen to play: "+choice);
@@ -57,27 +60,19 @@ public class MatrixLogicMiniMaxAB {
 	
 	int MaxValue(Board board,int alpha,int beta){
 		counter++;
-		
-		
+		if(counter>cutoff){depth=counter;return 0;}
+		evals++;
 		State test = new State(board);
-		if(test.isTerminal()){
-			return test.getUtility();
-		}
-	
+		if(test.isTerminal())	return test.getUtility();	
 		int v = Integer.MIN_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			v=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1)),alpha,beta));
-			
+			counter--;
 			if(v>=beta){
 				return v;
 			}
 			
 			alpha=ToolSet.Max(alpha,v);
-			
-			if(counter>cutoff){
-				wasCut=true;
-				return v;
-				}
 		}
 		
 		return v;
@@ -85,18 +80,16 @@ public class MatrixLogicMiniMaxAB {
 	
 	int MinValue(Board board,int alpha,int beta){
 		counter++;
-		
+		if(counter>cutoff){depth=counter;return 0;}
+		evals++;
 		State test = new State(board);
-		if(test.isTerminal()) {
-			return test.getUtility();
-		}
-		
+		if(test.isTerminal()) return test.getUtility();		
 		int v = Integer.MAX_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			v=ToolSet.Min(v,MaxValue((ToolSet.Result(board,a,-1)),alpha,beta));
+			counter--;
 			if(v<=alpha){return v;}
 			beta = ToolSet.Min(beta,v);
-			if(counter>cutoff){wasCut=true;return v;}
 		}
 		
 		return v;
