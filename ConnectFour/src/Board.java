@@ -58,7 +58,11 @@ public class Board implements Cloneable{
        for (int x = 0; x< this.columns; x++) {
     	   if (this.board[x].N != B.board[x].N) return false;
     	   for (int y = 0;  y < this.rows; y++) {
-    		   if (this.board[x].col[y] != B.board[x].col[y]) return false;
+    		   if (this.board[x].col[y]==null){
+    			   if(this.board[x].col[y] == this.board[x].col[y]) continue;
+    			   else return false;
+    		   }
+    		   if (!(this.board[x].col[y].equals(B.board[x].col[y]))) return false;
     	   }
        }
 

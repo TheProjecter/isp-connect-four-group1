@@ -1,17 +1,13 @@
 import java.util.Hashtable;
 
-
-
 public class MatrixLogicMiniMaxABTT {
-	int counter =0;
-	int cutoff = 200000;
+	int counter = 0;
+	int cutoff = 500000;
 	boolean wasCut = false;
 	int winCondition = 4;
-	public static Hashtable<Board, State> TransTableMax = new Hashtable<Board, State>();
-	public static Hashtable<Board, State> TransTableMin = new Hashtable<Board, State>();
+	public static Hashtable<Board, State> TransTable = new Hashtable<Board, State>();
 	
-	public MatrixLogicMiniMaxABTT(){
-	}
+	public MatrixLogicMiniMaxABTT(){}
 
 	int ABsearch(Board board){
 			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
@@ -61,23 +57,24 @@ public class MatrixLogicMiniMaxABTT {
 	
 	int MaxValue(Board board,int alpha,int beta){
 		counter++;
+//		System.out.println(counter);
 		
-		if(TransTableMax.containsKey(board)){
-			return TransTableMax.get(board).getUtility();
+		if(TransTable.containsKey(board)){
+			return TransTable.get(board).getUtility();
 		}
 		
 		State test = new State(board);
 		if(test.isTerminal()){
-			TransTableMax.put(board, test);
+			TransTable.put(board, test);
 			return test.getUtility();
 		}
 	
 		int v = Integer.MIN_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			v=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1)),alpha,beta));
+			TransTable.put(board, new State(v));
 			
 			if(v>=beta){
-				TransTableMax.put(board, new State(v));
 				return v;
 			}
 			
@@ -86,37 +83,36 @@ public class MatrixLogicMiniMaxABTT {
 			if(counter>cutoff){
 				wasCut=true;
 				return v;
-				}
+			}
 		}
 		
-		TransTableMax.put(board, new State(v));
 		return v;
 	}
 	
 	int MinValue(Board board,int alpha,int beta){
 		counter++;
+//		System.out.println(counter);
 		
-		if(TransTableMin.containsKey(board)){
-			return TransTableMin.get(board).getUtility();
+		if(TransTable.containsKey(board)){
+			return TransTable.get(board).getUtility();
 		}
 		
 		State test = new State(board);
 		if(test.isTerminal()) {
-			TransTableMin.put(board, test);
+			TransTable.put(board, test);
 			return test.getUtility();
 		}
 		
 		int v = Integer.MAX_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			v=ToolSet.Min(v,MaxValue((ToolSet.Result(board,a,-1)),alpha,beta));
+			TransTable.put(board, new State(v));
 			if(v<=alpha){
-				TransTableMin.put(board, new State(v));
 				return v;
 				}
 			beta = ToolSet.Min(beta,v);
 			if(counter>cutoff){wasCut=true;return v;}
 		}
-		TransTableMin.put(board, new State(v));
 		return v;
 	}
 
