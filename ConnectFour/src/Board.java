@@ -6,6 +6,11 @@ public class Board implements Cloneable{
 	private int columns = 0;
 	private int winCondition = 4;
 	
+	/**
+	 * Constructs the board.
+	 * @param column
+	 * @param row
+	 */
 	public Board(int column, int row){
 		this.board = new Column[column];
 		this.rows = row;
@@ -15,6 +20,9 @@ public class Board implements Cloneable{
 		}
 	}
 	
+	/**
+	 * The clone implementation for a board.
+	 */
 	@Override
 	protected Object clone(){
 		Board clone = new Board(this.columns,this.rows);
@@ -26,6 +34,9 @@ public class Board implements Cloneable{
 		return clone;
 	}
 	
+	/**
+	 * Converts the board to a string. Inverting the direction of the columns.
+	 */
 	public String toString(){
 		String n="";
 		for (int i=0;i<this.rowCount();i++){
@@ -38,6 +49,11 @@ public class Board implements Cloneable{
 		return n;
 	}
 	
+	
+	/**
+	 * Returns an array of integers representing the open columns in the board. 
+	 * @return
+	 */
 	public int[] openColums(){
 		
 		//First an iteration to determine the number of open cols.
@@ -58,18 +74,37 @@ public class Board implements Cloneable{
 		return openCols;
 	}
 	
+	/**
+	 * Checks whether every column in the board is at max. capacity.
+	 * @return
+	 */
 	boolean isFull(){
 		return this.openColums().length==0;
 	}
-		
+	
+	/**
+	 * Adds a coin belonging to PlayerID to a column in the the board.
+	 * @param col
+	 * @param PlayerID
+	 */
 	public void add(int col,int PlayerID){
 		this.board[col].add(PlayerID);
 	}
 	
+	/**
+	 * Returns an array of Coins representing column x.
+	 * @param x
+	 * @return
+	 */
 	public Coin[] getColumn(int x){
 		return this.board[x].col;
 	}
-
+	
+	/**
+	 * Returns an array of Coins representing row x.
+	 * @param x
+	 * @return
+	 */
 	public Coin[] getRow(int x){
 		Coin[] row = new Coin[this.colCount()];
 		for (int i =0;i<board.length;i++){
@@ -78,7 +113,14 @@ public class Board implements Cloneable{
 		return row;
 	}
 
-	public Coin[] getLeftDiagonal(int diaNumber){
+	
+	/**
+	 * Returns a Coin array representing the x'th left diagonal.
+	 * Starting from the lowest left corner and ending in the top right corner.
+	 * @param x
+	 * @return
+	 */
+	public Coin[] getLeftDiagonal(int x){
 		int diagonalSize;
 		
 		if (rows<columns)
@@ -92,7 +134,7 @@ public class Board implements Cloneable{
 		
 		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
 			
-			int coinToGet = colIt+rows-winCondition-diaNumber;
+			int coinToGet = colIt+rows-winCondition-x;
 			
 			if (!((coinToGet >= rows) || (coinToGet < 0))){
 				Column currentColumn = this.board[colIt];
@@ -102,7 +144,13 @@ public class Board implements Cloneable{
 		return diagonal;
 	}		
 
-	public Coin[] getRightDiagonal(int diaNumber){
+	/**
+	 * Returns a Coin array representing the x'th right diagonal
+	 * Starting from the top left corner and ending in the bottom right corner.
+	 * @param x
+	 * @return
+	 */
+	public Coin[] getRightDiagonal(int x){
 		int diagonalSize;
 		
 		if (rows<columns)
@@ -114,7 +162,7 @@ public class Board implements Cloneable{
 		Coin[] diagonal = new Coin[diagonalSize];
 
 		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
-			int coinToGet = diaNumber+(winCondition-1)-colIt;
+			int coinToGet = x+(winCondition-1)-colIt;
 			if (!((coinToGet >= rows) || (coinToGet < 0))){
 				Column currentColumn = this.board[colIt];
 				diagonal[colIt] = currentColumn.get(coinToGet);
@@ -123,42 +171,26 @@ public class Board implements Cloneable{
 		return diagonal;
 	}
 
-	public Coin[] getCertain(int x, String Certain){
-//		switch (Certain){
-//        case "row":
-//        return getRow(x);
-//        case "column":
-//        return getColumn(x);
-//        case "rightDiagonal":
-//        return getRightDiagonal(x);
-//        case "leftDiagonal":
-//        return getLeftDiagonal(x);
-//		}
-		return null;
-	}
-
-	int certainCount(String Certain){
-//		switch (Certain){
-//        case "row":
-//        return rowCount();
-//        case "column":
-//        return colCount();
-//        case "rightDiagonal":
-//        return diagonalCount();
-//        case "leftDiagonal":
-//        return diagonalCount();
-//		}
-		return -1;
-	}	
-	
+	/**
+	 * Returns an integer representing the number of diagonals in the board.
+	 * @return
+	 */
  	public int diagonalCount(){
 		return rows+columns-2*(winCondition-1)+1;
 	}
-	
+ 	
+	/**
+	 * Returns an integer representing the number of rows in the board.
+	 * @return
+	 */
 	int rowCount(){
 		return this.rows;
 	}
 	
+	/**
+	 * Returns an integer representing the number of columns in the board.
+	 * @return
+	 */
 	int colCount(){
 		return this.columns;
 	}
