@@ -12,24 +12,28 @@ public class MiniMaxABDepthFirst {
 	int ABsearch(Board board){
 			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
 			int choice = ToolSet.Actions(board)[0];
-			
+
+			if(wasCut){
+			System.out.println("I was cut!");
 			for (int a: ToolSet.Actions(board)){
-				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);
-					if(wasCut){
-						//Hvis der var et cutoff kan vi ikke regne med at hverken min eller max val er rigtige.
-						//Vi bliver nødt til at spille efter den maksimale af de udregnede minvals.
-						//Hele pointen med cut-off er at vi ikke kan tjekke alle de følgende muligheder. Men vi kan da tjekke
-						//det næste niveau og sikre os at man ikke spiller et spil der giver modstanderen sejr i næste træk.
+				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);					
 						if(!nextLoose(ToolSet.Result(board,a,1))){
+							System.out.println("My opponent cannot win if i play "+a);
 							v=ToolSet.Max(v, b);
 							if(b==v) {
 									choice=a;
 							}
 						}
 					}
-					else if(b==v) {
+			}
+			
+			else{
+			for (int a: ToolSet.Actions(board)){
+				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);
+					if(b==v) {
 					choice=a;
 					}
+			}
 			}
 			
 			System.out.println("After " + counter +" evaluations.");
@@ -64,7 +68,7 @@ public class MiniMaxABDepthFirst {
 			v=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1)),alpha,beta));
 			if(v>=beta){return v;}			
 			alpha=ToolSet.Max(alpha,v);
-			if(counter>cutoff){wasCut=true;break;}
+			if(counter>cutoff){wasCut=true;return v;}
 		}
 		
 		return v;
@@ -80,7 +84,7 @@ public class MiniMaxABDepthFirst {
 			v=ToolSet.Min(v,MaxValue((ToolSet.Result(board,a,-1)),alpha,beta));
 			if(v<=alpha){return v;}
 			beta = ToolSet.Min(beta,v);
-			if(counter>cutoff){wasCut=true;break;}
+			if(counter>cutoff){wasCut=true;return v;}
 		}
 		
 		return v;
