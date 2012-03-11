@@ -3,7 +3,7 @@
 
 public class MiniMaxABDepthFirst {
 	int counter =0;
-	int cutoff = 100000;
+	int cutoff = 100;
 	boolean wasCut = false;
 	
 	public MiniMaxABDepthFirst(){
@@ -64,7 +64,7 @@ public class MiniMaxABDepthFirst {
 			v=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1)),alpha,beta));
 			if(v>=beta){return v;}			
 			alpha=ToolSet.Max(alpha,v);
-			if(counter>cutoff){break;}
+			if(counter>cutoff){wasCut=true;break;}
 		}
 		
 		return v;
@@ -80,7 +80,7 @@ public class MiniMaxABDepthFirst {
 			v=ToolSet.Min(v,MaxValue((ToolSet.Result(board,a,-1)),alpha,beta));
 			if(v<=alpha){return v;}
 			beta = ToolSet.Min(beta,v);
-			if(counter>cutoff){break;}
+			if(counter>cutoff){wasCut=true;break;}
 		}
 		
 		return v;
