@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 public class MatrixLogicMiniMaxAB {
 	int counter =0;
-	int cutoff = 200000;
+	int cutoff = 20000000;
 	boolean wasCut = false;
 	int winCondition = 4;
 	public static Hashtable<Board, State> TransTableMax = new Hashtable<Board, State>();
