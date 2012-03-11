@@ -11,7 +11,7 @@ public class MiniMaxABDepthFirst {
 			int choice = ToolSet.Actions(board)[0];
 
 			if(wasCut){
-			System.out.println("I was cut off!");
+			System.out.println("Processing interrupted!");
 			for (int a: ToolSet.Actions(board)){
 				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);					
 						if(!nextLoose(ToolSet.Result(board,a,1))){
@@ -31,15 +31,20 @@ public class MiniMaxABDepthFirst {
 					choice=a;
 					}
 			}
-			if(v==1){
-				System.out.println("I will win, resistance is futile!");
+			switch (v){
+			case 0:System.out.println("We tie for now, human.");
+			break;
+			case 1:System.out.println("Resistance is futile!");
+			break;
+			case -1:System.out.println("I cannot maintain!");
 			}
 			}
 			
-			System.out.println("After " + counter +" evaluations.");
+			System.out.println("After " + counter +" evaluations");
+			System.out.println("I have chosen to play "+choice+".");
 			counter=0;
 			wasCut=false;
-			System.out.println("I have chosen to play: "+choice);
+
 			
 			return choice;
 		}
