@@ -1,10 +1,10 @@
 
-public class MatrixLogic implements IGameLogic {
+public class Player2Logic implements IGameLogic {
     private Board board = new Board(0,0);
-    private MiniMaxAB minmax = new MiniMaxAB();
+    private MiniMaxABDepthFirst minmax = new MiniMaxABDepthFirst();
     private int playerID;
     
-    public MatrixLogic() {
+    public Player2Logic() {
         //TODO Write your implementation for this method
     }
 	
