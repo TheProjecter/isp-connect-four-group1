@@ -1,7 +1,7 @@
 
 public class MatrixLogic implements IGameLogic {
     private Board board = new Board(0,0);
-    private MatrixLogicMiniMaxAB minmax = new MatrixLogicMiniMaxAB();
+    private MatrixLogicMiniMaxABTT minmax = new MatrixLogicMiniMaxABTT();
     
     public MatrixLogic() {
         //TODO Write your implementation for this method
