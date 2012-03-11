@@ -34,6 +34,57 @@ public class Board implements Cloneable{
 		return clone;
 	}
 	
+    /**
+    *
+    * @param object
+    * @return Returns true if the object passed to the method is equal to
+    * to the caller object.
+    */
+   @Override
+    public boolean equals(Object object) {
+       if (object == null) return(false); //Null reference pointer, return false
+       if (object == this) return(true); //Same object, return true
+       if (!(object instanceof Board)) return(false); //Not same class, return false
+       
+       Board B = (Board) object; //Cast to Board
+       
+       
+       if (this.columns != B.columns) return false;
+       if (this.rows != B.rows) return false;
+       
+       for (int x = 0; x< this.columns; x++) {
+    	   if (this.board[x].N != B.board[x].N) return false;
+    	   for (int y = 0;  y < this.rows; y++) {
+    		   if (this.board[x].col[y] != B.board[x].col[y]) return false;
+    	   }
+       }
+
+       return true;
+    }
+   
+   
+   public double doubleHashCode() {
+	   double hashcode = 0;
+	   int power = 0;
+	   for (int x = 0; x< this.columns; x++) {
+		   
+    	   for (int y = 0;  y < this.rows; y++) {
+    		   if (this.board[x].col[y] == null) continue;
+    		   int playerID;
+    		   if (this.board[x].col[y].isPlayerOne())
+    			   playerID = 1;
+    		   else if (this.board[x].col[y].isPlayerTwo())
+    			   playerID = 2;
+    		   else playerID = 0;
+    		   hashcode +=  Math.pow(3, power) * playerID;
+    		   power++;
+    	   }
+       }
+	   
+	return hashcode;
+	   
+   }
+	
 	/**
 	 * Converts the board to a string. Inverting the direction of the columns.
 	 */
