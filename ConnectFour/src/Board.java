@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 
 public class Board implements Cloneable{
 	
@@ -5,6 +7,7 @@ public class Board implements Cloneable{
 	private int rows = 0;
 	private int columns = 0;
 	private int winCondition = 4;
+	
 	
 	/**
 	 * Constructs the board.
@@ -64,25 +67,36 @@ public class Board implements Cloneable{
    
    @Override
    public int hashCode() {
-	   int hashcode = 0;
-	   int power = 0;
+	   boolean[] boolArray = new boolean[this.columns*this.rows*2];
+	   int counter = -2;
+	   
 	   for (int x = 0; x< this.columns; x++) {
 		   
     	   for (int y = 0;  y < this.rows; y++) {
-    		   if (this.board[x].col[y] == null) continue;
-    		   int playerID;
-    		   if (this.board[x].col[y].isPlayerOne())
-    			   playerID = 1;
-    		   else if (this.board[x].col[y].isPlayerTwo())
-    			   playerID = 2;
-    		   else playerID = 0;
+    		   counter+= 2;
     		   
-    		   hashcode +=  Math.pow(3, power) * playerID;
-    		   power++;
+    		   
+    		   // [false, false] = no coin
+    		   if (this.board[x].col[y] == null) continue;
+    		   
+    		   int playerID;
+    		   
+    		   // [true,true] = player 1 coin
+    		   if (this.board[x].col[y].isPlayerOne()) {
+    			   boolArray[counter] = true;
+    			   boolArray[counter+1] = true;
+    		   }
+    		   
+    		   // [true, false] = player 2 coin
+    		   else if (this.board[x].col[y].isPlayerTwo()) {
+    			   boolArray[counter] = true;
+    			   boolArray[counter+1] = false;
+    		   }
+    		   
     	   }
        }
 	   
-	return hashcode;
+	return Arrays.hashCode(boolArray);
 	   
    }
 	
