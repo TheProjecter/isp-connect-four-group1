@@ -3,7 +3,7 @@
 
 public class MatrixLogicMiniMaxAB {
 	int counter =0;
-	int cutoff = 20000000;
+	int cutoff = 1000;
 	boolean wasCut = false;
 	
 	public MatrixLogicMiniMaxAB(){
@@ -12,7 +12,7 @@ public class MatrixLogicMiniMaxAB {
 	int ABsearch(Board board){
 			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
 			System.out.println("MaxVal: "+ v);
-			int choice = 0;
+			int choice = ToolSet.Actions(board)[0];
 			
 			for (int a: ToolSet.Actions(board)){
 				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);
