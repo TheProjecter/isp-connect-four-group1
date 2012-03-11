@@ -12,13 +12,20 @@ public class MiniMaxABDepthFirst {
 
 			if(wasCut){
 			System.out.println("Processing interrupted!");
+			boolean crisis=true;
 			for (int a: ToolSet.Actions(board)){
 				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);					
-						if(!nextLoose(ToolSet.Result(board,a,1))){
-							//System.out.println("My opponent cannot instantwin if i play "+a);
+						if(!nextLoose(ToolSet.Result(board,a,1))){							
+							int lastresort=a;
+							System.out.println("My opponent cannot instantwin if i play "+a);
 							v=ToolSet.Max(v, b);
 							if(b==v) {
 									choice=a;
+									crisis=false;
+							}
+							if(crisis){
+								choice=lastresort;
+								System.out.println("This move is a crisis move. If my opponent is any good he will win after this, but not instantly.");
 							}
 						}
 					}
