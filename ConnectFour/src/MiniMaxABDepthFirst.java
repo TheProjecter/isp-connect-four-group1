@@ -1,9 +1,6 @@
-
-
-
 public class MiniMaxABDepthFirst {
 	int counter =0;
-	int cutoff = 100;
+	int cutoff = 2000000;
 	boolean wasCut = false;
 	
 	public MiniMaxABDepthFirst(){
@@ -14,11 +11,11 @@ public class MiniMaxABDepthFirst {
 			int choice = ToolSet.Actions(board)[0];
 
 			if(wasCut){
-			System.out.println("I was cut!");
+			System.out.println("I was cut off!");
 			for (int a: ToolSet.Actions(board)){
 				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);					
 						if(!nextLoose(ToolSet.Result(board,a,1))){
-							System.out.println("My opponent cannot win if i play "+a);
+							//System.out.println("My opponent cannot instantwin if i play "+a);
 							v=ToolSet.Max(v, b);
 							if(b==v) {
 									choice=a;
@@ -34,13 +31,16 @@ public class MiniMaxABDepthFirst {
 					choice=a;
 					}
 			}
+			if(v==1){
+				System.out.println("I will win, resistance is futile!");
+			}
 			}
 			
 			System.out.println("After " + counter +" evaluations.");
 			counter=0;
 			wasCut=false;
 			System.out.println("I have chosen to play: "+choice);
-			System.out.println("For an expected outcome of: "+v);
+			
 			return choice;
 		}
 	
