@@ -1,4 +1,6 @@
-\documentclass[a4paper]{article}
+\documentclass[11pt, a4paper]{article}
+\usepackage{fullpage}
+\usepackage{amsfonts}
 \usepackage[latin1]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
@@ -8,14 +10,35 @@
 \usepackage{fancyhdr}           %Min header begynder
 \pagestyle{fancy}
 \fancyhf{}
+\setlength{\headheight}{10pt}
+\setlength{\headsep}{25pt}
 \fancyhead[L]{Connect Four}  %Header venstre
 \fancyhead[C]{Group I}			 %header center
-\fancyhead[R]{ISP 2012, ITU} 		 %header højre
+\fancyhead[R]{ISP 2012, ITU} 		 %header hï¿½jre
 \fancyfoot[R]{\thepage} 				 %Sidetal i bunden
 \renewcommand\headrulewidth{0.4pt}
 \renewcommand\footrulewidth{0.4pt}
+
+\author{Mark Gray, Johan Sivertsen \& Lauge Groes}
+\title{Intelligent Systems Programming, Assignment 1: Connect Four Game}
+\date{\today}
 \begin{document}
-A report on 2-3 pages explaining your solution.
-– Explain evaluation and cut-off function.
-– Explain search algorithm.
+\maketitle
+\newpage
+\section*{Introduction}
+
+A report on 2-3 pages explaining your solution. Explain evaluation and cut-off
+function. Explain search algorithm.
+
+We have developed an implementation of a connect four agent that uses a
+combination of the minimax algorithm, depth-limited search (iterative deepening
+depth-first search), \alpha-\beta-pruning and a heuristic evaluation function. 
+
+\section*{Evaluation Function}
+
+\section*{Cut-off Function}
+
+
+
 \end{document}
+
