@@ -1,14 +1,14 @@
 
 
 
-public class MatrixLogicMiniMaxAB {
+public class MiniMaxAB {
 	int counter =0;
 	int cutoff = 8;
 	int evals = 0;
 	int depth = 0;
 	boolean wasCut = false;
 	
-	public MatrixLogicMiniMaxAB(){
+	public MiniMaxAB(){
 	}
 
 	int ABsearch(Board board){
