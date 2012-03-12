@@ -89,57 +89,5 @@ public class State {
 	
 		return (byte) 0;
 }
-	
-	public int calcHeuristics(Coin[] coinArr){
-		int[] oneHeu = new int[winCondition];
-		int[] twoHeu = new int[winCondition];
-		int oneCount = 0;
-		int twoCount = 0;
-		int heuristic = 0;
-		
-		for (Coin coin:coinArr){
-			if(coin==null){
-				oneCount++;
-				twoCount++;
-			}
-			else if(coin.isPlayerOne()){
-				oneHeu[oneCount] = 1;
-				oneCount++;
-				twoCount=0;
-			}
-			else if(coin.isPlayerTwo()){
-				twoHeu[twoCount] = -1;
-				twoCount++;
-				oneCount=0;
-				}
-			
-			if(oneCount == winCondition){
-				oneCount = 0;
-				for(int one: oneHeu){
-					if(one!=0){
-						int value = (int) Math.pow(10,oneCount);
-						heuristic += value*one;
-						oneCount++;
-					}
-				}
-				oneCount = 0;
-				oneHeu = new int[winCondition];
-			}
-			
-			if(twoCount == winCondition){
-				for(int two: twoHeu){
-					int value = (int) Math.pow(10,twoCount);
-					heuristic += value*two;
-					twoCount++;
-				}
-				twoCount = 0;
-				twoHeu = new int[winCondition];
-			}
-		}
-		
-		
-	
-		return heuristic;
-}
 
 }
