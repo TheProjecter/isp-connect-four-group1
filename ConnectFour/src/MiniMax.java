@@ -1,10 +1,10 @@
 
-public class MatrixLogicMiniMax {
+public class MiniMax {
 	int counter =0;
 	int cutoff=1000000;
 	
 	
-	public MatrixLogicMiniMax(){
+	public MiniMax(){
 	}
 
 	int MinimaxDecision(Board board){
