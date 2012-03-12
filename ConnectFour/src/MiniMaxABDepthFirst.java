@@ -1,6 +1,6 @@
 public class MiniMaxABDepthFirst {
 	int counter =0;
-	int cutoff = 2000000;
+	int cutoff = 3000000;
 	boolean wasCut = false;
 	
 	public MiniMaxABDepthFirst(){
@@ -17,7 +17,7 @@ public class MiniMaxABDepthFirst {
 				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);					
 						if(!nextLoose(ToolSet.Result(board,a,1))){							
 							int lastresort=a;
-							System.out.println("My opponent cannot instantwin if i play "+a);
+//							System.out.println("My opponent cannot instantwin if i play "+a);
 							v=ToolSet.Max(v, b);
 							if(b==v) {
 									choice=a;
