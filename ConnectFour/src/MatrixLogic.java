@@ -13,15 +13,15 @@ public class MatrixLogic implements IGameLogic {
     }
 	
     public Winner gameFinished() {
-    	State test = new State(this.board);
+    	StateEvolved test = new StateEvolved(this.board);
     	
     	if (test.getUtility() == 0){
     		return Winner.TIE;
     	}
-    	if (test.getUtility() == 1){
+    	if (test.getUtility() == test.getPlayerWin()){
     		return Winner.PLAYER1;
     	}
-    	if (test.getUtility()== -1){
+    	if (test.getUtility()== -test.getPlayerWin()){
     		return Winner.PLAYER2;
     	}
     	return Winner.NOT_FINISHED;
