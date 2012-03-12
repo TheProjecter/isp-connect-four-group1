@@ -2,10 +2,10 @@ import java.util.HashSet;
 
 public class State {
 	private byte utility = 0;
-	private int heuristic = 0;
-	private byte winCondition = 4;
+	private int winCondition;
 
 	public State(Board board){
+		this.winCondition = board.getWinCondition();
 		utility = utility(board);
 	}
 	
