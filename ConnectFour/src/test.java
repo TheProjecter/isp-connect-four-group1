@@ -9,16 +9,14 @@ public class test {
 	 */
 	public static void main(String[] args) {
 		Board b = new Board(6,7);
-		Board c = new Board(6,7);
 		b.add(0, 1);
-		c.add(0, 1);
+		b.add(0, 1);
+		b.add(0, 1);
+
+		System.out.println(b);
+		State s = new State(b);
+		System.out.println(s.calcHeuristics(coinArr))
 		
-		Coin a = new Coin(1);
-		Coin d = new Coin(1);
-		System.out.println(a.equals(d));
-		
-		
-		System.out.println(b.equals(c));
 		
 		   for (int x = 0; x< b.colCount(); x++) {
 			   
