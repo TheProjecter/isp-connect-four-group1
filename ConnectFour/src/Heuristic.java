@@ -90,6 +90,7 @@ public class Heuristic {
 			}
 			
 			if(twoCount == winCondition){
+				twoCount = 0;
 				for(int two: twoHeu){
 					int value = (int) Math.pow(10,twoCount);
 					heuristic += value*two;
