@@ -193,7 +193,7 @@ public class Board implements Cloneable{
 	public Coin[] getLeftDiagonal(int x){
 		int diagonalSize;
 		
-		if (rows<columns)
+		if (rows>columns)
 			diagonalSize = rows;
 		else
 			diagonalSize = columns;
@@ -223,7 +223,7 @@ public class Board implements Cloneable{
 	public Coin[] getRightDiagonal(int x){
 		int diagonalSize;
 		
-		if (rows<columns)
+		if (rows>columns)
 			diagonalSize = rows;
 		else
 			diagonalSize = columns;
