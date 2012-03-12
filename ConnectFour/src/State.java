@@ -1,11 +1,8 @@
-import java.util.HashSet;
-
 public class State {
 	private byte utility = 0;
-	private int winCondition;
+	private byte winCondition = 4;
 
 	public State(Board board){
-		this.winCondition = board.getWinCondition();
 		utility = utility(board);
 	}
 	
@@ -77,7 +74,7 @@ public class State {
 			else if(coin.isPlayerOne()){
 				oneSum++;
 				twoSum=0;
-				if(oneSum == winCondition) return (byte) 1;
+				if(oneSum==winCondition) return (byte) 1;
 				}
 			
 			else if(coin.isPlayerTwo()){
