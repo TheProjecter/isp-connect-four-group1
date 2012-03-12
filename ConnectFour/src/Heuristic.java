@@ -1,5 +1,10 @@
 
 public class Heuristic {
+	int winCondition;
+	
+	public Heuristic(Board b){
+	}
+	
 	public int getHeuristic(){
 		
 	}
