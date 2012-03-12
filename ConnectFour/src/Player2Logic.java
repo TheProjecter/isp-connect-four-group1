@@ -14,6 +14,7 @@ public class Player2Logic implements IGameLogic {
     }
 	
     public Winner gameFinished() {
+    	State test = new State(this.board);
     	
     	if (test.getUtility() == 0){
     		return Winner.TIE;
