@@ -3,7 +3,7 @@
 
 public class MiniMaxAB {
 	int counter =0;
-	int cutoff = 8;
+	int cutoff = 7;
 	int evals = 0;
 	int depth = 0;
 	
