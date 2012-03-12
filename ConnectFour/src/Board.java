@@ -265,4 +265,7 @@ public class Board implements Cloneable{
 		return this.columns;
 	}
 	
+	public int getWinCondition(){
+		return winCondition;
+	}
 	}
