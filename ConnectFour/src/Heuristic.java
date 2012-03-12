@@ -1,12 +1,45 @@
 
 public class Heuristic {
 	int winCondition;
+	int heuristic;
 	
 	public Heuristic(Board b){
+		winCondition = b.getWinCondition();
+		this.calcBoardHeuristic(b);
 	}
 	
 	public int getHeuristic(){
+		return heuristic;
+	}
+	/**
+	 * Calculates the heuristic of an entire board, using the calcHeuristics method for 
+	 * specific rows, columns diagonals.
+	 * @param heuristic 
+	 * @return
+	 */
+	private void calcBoardHeuristic(Board b){
+		int bHeuristic = 0;
+    	for(int x=0;x<b.colCount();x++){
+    		Coin[] colX = b.getColumn(x);
+    		bHeuristic += this.calcCoinHeuristic(colX);
+    	}
+    	
+    	for(int y=0;y<b.rowCount();y++){
+    		Coin[] rowY = b.getRow(y);
+    		bHeuristic += this.calcCoinHeuristic(rowY);
+    	}
+    	
+    	for(int l=0;l<b.diagonalCount();l++){
+    		Coin[] diaL= b.getLeftDiagonal(l);
+    		bHeuristic += this.calcCoinHeuristic(diaL);
+    	}
+    	
+    	for(int r=0;r<b.diagonalCount();r++){
+    		Coin[] diaR = b.getRightDiagonal(r);
+    		bHeuristic += this.calcCoinHeuristic(diaR);
+    	}
 		
+    	heuristic = bHeuristic;
 	}
 	
 	/**
@@ -20,7 +53,7 @@ public class Heuristic {
 	 * @param coinArr
 	 * @return
 	 */
-	private int calcHeuristic(Coin[] coinArr){
+	private int calcCoinHeuristic(Coin[] coinArr){
 		int[] oneHeu = new int[winCondition];
 		int[] twoHeu = new int[winCondition];
 		int oneCount = 0;
@@ -70,6 +103,5 @@ public class Heuristic {
 		
 	
 		return heuristic;
-}
-
+	}
 }
