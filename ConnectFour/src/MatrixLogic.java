@@ -1,6 +1,6 @@
 public class MatrixLogic implements IGameLogic {
     private Board board = new Board(0,0);
-    private MiniMaxAB minmax = new MiniMaxAB();
+    private MiniMaxABDepthFirstHur minmax = new MiniMaxABDepthFirstHur();
     private int playerID;
     
     public MatrixLogic() {
@@ -33,7 +33,12 @@ public class MatrixLogic implements IGameLogic {
     }
 
     public int decideNextMove() {
+		if(this.board.isEmpty()){
+			return this.board.rowCount()/2;
+		}
+		else{
 		System.out.println("Thinking...");
     	return minmax.ABsearch(this.board);
+		}
     }
 }
