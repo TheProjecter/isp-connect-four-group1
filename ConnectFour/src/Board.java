@@ -7,6 +7,7 @@ public class Board implements Cloneable{
 	private int rows = 0;
 	private int columns = 0;
 	private int winCondition = 4;
+	private boolean isEmpty=true;
 	
 	
 	/**
@@ -152,6 +153,10 @@ public class Board implements Cloneable{
 		return this.openColums().length==0;
 	}
 	
+	boolean isEmpty(){
+		return isEmpty;
+	}
+	
 	/**
 	 * Adds a coin belonging to PlayerID to a column in the the board.
 	 * @param col
@@ -159,6 +164,7 @@ public class Board implements Cloneable{
 	 */
 	public void add(int col,int PlayerID){
 		this.board[col].add(PlayerID);
+		isEmpty=false;
 	}
 	
 	/**
