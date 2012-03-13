@@ -8,8 +8,8 @@ public class MiniMaxAB {
 	}
 
 	int ABsearch(Board board){
-			if(board.openSlotsLeft()<25)cutoff=8;
-			if(board.openSlotsLeft()<20)cutoff=10;
+			cutoff=210/board.openSlotsLeft()+2;
+
 			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
 			int choice = ToolSet.Actions(board)[0];
 			
