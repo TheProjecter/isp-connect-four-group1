@@ -70,6 +70,7 @@ public class test {
 	    		   b.add(x, (int)(Math.random() * 2));
 	    		   State s = new State(b);
 	    		   System.out.println("Utility for board is:"+s.getUtility());
+	    		   System.out.println("Open slots in board is:"+b.openSlotsLeft());
 	    		   System.out.println(b);
 	    	   }
 	       }   

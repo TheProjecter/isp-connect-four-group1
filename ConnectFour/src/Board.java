@@ -271,6 +271,16 @@ public class Board implements Cloneable{
 		return this.columns;
 	}
 	
+	int openSlotsLeft(){
+		int openSlots = 0;
+		for(Column col: this.board){
+			for(Coin coin:col.col){
+				if (coin==null) openSlots++;
+			}
+		}
+		return openSlots;
+	}
+	
 	public int getWinCondition(){
 		return winCondition;
 	}
