@@ -1,6 +1,6 @@
 public class MatrixLogic implements IGameLogic {
     private Board board = new Board(0,0);
-    private MiniMaxABDepthFirstHur minmax = new MiniMaxABDepthFirstHur();
+    private MiniMaxABDepthFirst minmax = new MiniMaxABDepthFirst();
     private int playerID;
     
     public MatrixLogic() {
@@ -13,20 +13,20 @@ public class MatrixLogic implements IGameLogic {
     }
 	
     public Winner gameFinished() {
-    	StateEvolved test = new StateEvolved(this.board);
+    	State test = new State(this.board);
     	
     	if (test.getUtility() == 0){
     		return Winner.TIE;
     	}
-    	if (test.getUtility() == test.getPlayerWin()){
+    	if (test.getUtility() == 1){
     		return Winner.PLAYER1;
     	}
-    	if (test.getUtility() == -test.getPlayerWin()){
+    	if (test.getUtility()== -1){
     		return Winner.PLAYER2;
     	}
     	return Winner.NOT_FINISHED;
     }
-    
+        
     public void insertCoin(int column, int playerID) {
         //TODO Write your implementation for this method
     	board.add(column, playerID);

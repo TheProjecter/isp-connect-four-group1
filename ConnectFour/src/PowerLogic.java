@@ -1,6 +1,5 @@
 public class PowerLogic implements IGameLogic {
     private Board board = new Board(0,0);
-    private MiniMaxAB minmax = new MiniMaxAB();
     private int playerID;
     private int opponentID;
     
@@ -47,6 +46,7 @@ public class PowerLogic implements IGameLogic {
 
     public int decideNextMove() {
 		System.out.println("Thinking...");
+	    MiniMaxAB minmax = new MiniMaxAB();
     	return minmax.ABsearch(this.board);
     }
 }

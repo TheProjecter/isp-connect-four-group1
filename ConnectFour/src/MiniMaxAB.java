@@ -8,6 +8,8 @@ public class MiniMaxAB {
 	}
 
 	int ABsearch(Board board){
+			if(board.openSlotsLeft()<25)cutoff=8;
+			if(board.openSlotsLeft()<20)cutoff=10;
 			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
 			int choice = ToolSet.Actions(board)[0];
 			
@@ -18,7 +20,7 @@ public class MiniMaxAB {
 				counter--;
 			}
 
-			System.out.println("At depth "+depth+", after " + evals+" evaluations.");
+			System.out.println("At depth "+depth+", after " + evals+" evaluations, and "+board.openSlotsLeft()+" open slots left in the board.");
 			counter=0;
 			System.out.println("I have chosen to play: "+choice);
 			System.out.println("For an expected outcome of: "+v);
