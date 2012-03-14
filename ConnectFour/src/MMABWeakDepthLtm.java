@@ -1,15 +1,13 @@
-public class MiniMaxAB {
+public class MMABWeakDepthLtm {
 	int counter =0;
-	int cutoff = 7;
+	int cutoff = 3;
 	int evals = 0;
 	int depth = 0;
 	
-	public MiniMaxAB(){
+	public MMABWeakDepthLtm(){
 	}
 
 	int ABsearch(Board board){
-//			cutoff=210/board.openSlotsLeft()+2;
-
 			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
 			int choice = ToolSet.Actions(board)[0];
 			
