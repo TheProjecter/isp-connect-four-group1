@@ -1,6 +1,6 @@
 public class MMABWeakDepthLtm {
 	int counter =0;
-	int cutoff = 3;
+	int cutoff = 5;
 	int evals = 0;
 	int depth = 0;
 	
@@ -8,13 +8,19 @@ public class MMABWeakDepthLtm {
 	}
 
 	int ABsearch(Board board){
-			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
+//			cutoff=210/board.openSlotsLeft()+2;
+
+//			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
+			int v = Integer.MIN_VALUE;
 			int choice = ToolSet.Actions(board)[0];
 			
 			for (int a: ToolSet.Actions(board)){
 				counter++;
-				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);
-				if(b==v)choice=a;
+				int b = MaxValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);
+				if(b > v) {
+					choice = a;
+					v = b;
+				}
 				counter--;
 			}
 
