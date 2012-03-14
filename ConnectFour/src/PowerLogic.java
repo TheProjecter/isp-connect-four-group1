@@ -45,7 +45,7 @@ public class PowerLogic implements IGameLogic {
     }
 
     public int decideNextMove() {
-		System.out.println("Thinking...");
+		System.out.println("Strong mind thinking...");
 	    MiniMaxAB minmax = new MiniMaxAB();
     	return minmax.ABsearch(this.board);
     }
