@@ -11,14 +11,13 @@ public class MiniMaxAB {
 //			cutoff=210/board.openSlotsLeft()+2;
 
 //			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
-//			int choice = ToolSet.Actions(board)[0];
+			int choice = ToolSet.Actions(board)[0];
 			int v = Integer.MIN_VALUE;
-			int choice = ToolSet.Actions(board)[0];			
 
 			for (int a: ToolSet.Actions(board)){
 				counter++;
 //				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);
-				int b = MaxValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);
+				int b=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1)), Integer.MIN_VALUE, Integer.MAX_VALUE));
 //				if(b==v) choice=a;
 				if(b > v) {
 					choice = a;
