@@ -8,6 +8,7 @@ public class Board implements Cloneable{
 	private int columns = 0;
 	private int winCondition = 4;
 	private boolean isEmpty=true;
+	private int playerID = 1;
 	
 	
 	/**
@@ -18,6 +19,16 @@ public class Board implements Cloneable{
 	public Board(int column, int row){
 		this.board = new Column[column];
 		this.rows = row;
+		this.columns = column;
+		for (int i=0;i<column;i++){
+			this.board[i]=new Column(row);
+		}
+	}
+
+	public Board(int column, int row, int playerID){
+		this.board = new Column[column];
+		this.rows = row;
+		this.playerID = playerID;
 		this.columns = column;
 		for (int i=0;i<column;i++){
 			this.board[i]=new Column(row);
