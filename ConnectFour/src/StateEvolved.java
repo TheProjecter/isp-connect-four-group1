@@ -2,19 +2,16 @@
 public class StateEvolved {
 	private int utility = 0;
 	private int winCondition;
-	private boolean terminal = false;
+	private boolean isFull = false;
 	private int playerWin =  1000000;
 	
 	public StateEvolved(Board board){
 		this.winCondition = board.getWinCondition();
-		utility = utility(board);
-		if(utility==playerWin || utility == -playerWin || utility == 0){
-			terminal = true;
+		if(board.isFull()){
+			this.isFull = true;
 		}
-		if(utility==99){
-			utility = this.calcBoardHeuristic(board);
-		}
-
+		this.utility = setUtility(board);
+		if(utility==99) utility = this.calcBoardHeuristic(board);
 	}
 	
 	public StateEvolved(int util){
@@ -26,7 +23,7 @@ public class StateEvolved {
 	 * @param board
 	 * @return
 	 */
-	private int utility(Board board){
+	private int setUtility(Board board){
     	for(int col=0;col<board.colCount();col++){
     		int colWin = calcWinner(board.getColumn(col));
     		if(colWin!=0) return colWin;
@@ -46,9 +43,7 @@ public class StateEvolved {
     		int rDiaWin = calcWinner(board.getRightDiagonal(rDia));
     		if(rDiaWin!=0) return rDiaWin;
     	}
-		
-    	if(board.isFull()) return 0;
-    	
+		    	
 		return 99;
 	}
 	
@@ -57,7 +52,7 @@ public class StateEvolved {
 	 * @return
 	 */
 	public boolean isTerminal(){
-		return terminal;
+		return (utility==playerWin || utility == -playerWin || this.isFull);
 	}
 	
 	/**

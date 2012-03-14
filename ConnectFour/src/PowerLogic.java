@@ -23,10 +23,7 @@ public class PowerLogic implements IGameLogic {
 	
     public Winner gameFinished() {
     	StateEvolved test = new StateEvolved(this.board);
-    	
-    	if (test.getUtility() == 0){
-    		return Winner.TIE;
-    	}
+
     	if (test.getUtility() == test.getPlayerWin()){
     		if(playerID==1) return Winner.PLAYER1;
     		else if(playerID==2) return Winner.PLAYER2;
@@ -34,6 +31,11 @@ public class PowerLogic implements IGameLogic {
     	if (test.getUtility() == -test.getPlayerWin()){
     		if(playerID==1) return Winner.PLAYER2;
     		else if(playerID==2) return Winner.PLAYER1;
+    	}
+    	if (board.isFull()){
+    	    System.out.println(board.isFull());
+    	    System.out.println("There is a tie.");
+    		return Winner.TIE;
     	}
     	return Winner.NOT_FINISHED;
     }
@@ -47,6 +49,8 @@ public class PowerLogic implements IGameLogic {
     public int decideNextMove() {
 		System.out.println("Strong mind thinking...");
 	    MiniMaxAB minmax = new MiniMaxAB();
-    	return minmax.ABsearch(this.board);
+	    int a = minmax.ABsearch(this.board);
+	    System.out.println("Done thinking.");
+    	return a;
     }
 }
