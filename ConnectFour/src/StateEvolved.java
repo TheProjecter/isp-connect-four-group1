@@ -1,10 +1,17 @@
-
+/**
+ * StateEvolved contains methods that are used to calculate utilities of states and a heuristic function
+ *
+ */
 public class StateEvolved {
 	private int utility = 0;
 	private int winCondition;
 	private boolean isFull = false;
 	private int playerWin =  1000000;
 	
+	/**
+	 * Creates a StateEvolved class. Calculates utility of board.
+	 * @param board
+	 */
 	public StateEvolved(Board board){
 		this.winCondition = board.getWinCondition();
 		if(board.isFull()){
@@ -17,6 +24,7 @@ public class StateEvolved {
 	public StateEvolved(int util){
 		this.utility = (byte) util;
 	}
+	
 
 	/**
 	 * Returns the winner of the board.
