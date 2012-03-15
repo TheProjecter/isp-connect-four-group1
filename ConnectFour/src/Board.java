@@ -122,11 +122,10 @@ public class Board implements Cloneable{
 	public String toString(){
 		String n="";
 		for (int i=0;i<this.rowCount();i++){
-			
-		for (int c=0;c<this.colCount();c++){
-			n+=this.board[c].col[this.rowCount()-i-1]+"\t";
-		}
-		n+="\n";
+			for (int c=0;c<this.colCount();c++){
+				n+=this.board[c].col[this.rowCount()-i-1]+"\t";
+			}
+			n+="\n";
 		}
 		return n;
 	}
@@ -200,6 +199,24 @@ public class Board implements Cloneable{
 		return row;
 	}
 
+	private int diagonalSize(int x){
+		int maxDiagonalSize;
+		int diagonalCount = this.diagonalCount();
+		int diagonalSize = 0;
+		
+		if (rows<columns) maxDiagonalSize = rows;
+		else maxDiagonalSize = columns;
+		
+		System.out.println("DiagonalCount: "+(int) diagonalCount);
+		System.out.println("DiagonalCount/2: "+(int) diagonalCount/2);
+		if(x>diagonalCount/2) diagonalSize = (diagonalCount-1-x+winCondition);
+		else diagonalSize = x+winCondition;
+		
+		if(diagonalSize>maxDiagonalSize) diagonalSize = maxDiagonalSize;
+
+		System.out.println("Diagonal size for diagonal "+x+" is: "+diagonalSize);
+		return diagonalSize;
+	}
 	
 	/**
 	 * Returns a Coin array representing the x'th left diagonal.
@@ -208,26 +225,27 @@ public class Board implements Cloneable{
 	 * @return
 	 */
 	public Coin[] getLeftDiagonal(int x){
-		int diagonalSize;
-		
-		if (rows>columns)
-			diagonalSize = rows;
-		else
-			diagonalSize = columns;
-		
-
-				
+		int diagonalSize = diagonalSize(x);		
 		Coin[] diagonal = new Coin[diagonalSize];
-		
-		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
-			
+		int dia = 0;
+		for(int colIt = 0 ; colIt < columns; colIt++){
 			int coinToGet = colIt+rows-winCondition-x;
-			
 			if (!((coinToGet >= rows) || (coinToGet < 0))){
 				Column currentColumn = this.board[colIt];
-				diagonal[colIt] = currentColumn.get(coinToGet);
+				diagonal[dia] = currentColumn.get(coinToGet);
+				dia++;
 			}
 		}
+		
+//		for(int colIt = 0; colIt < columns; colIt++){
+//			int coinToGet = x+(winCondition-1)-colIt;
+//			if (!((coinToGet >= rows) || (coinToGet < 0))){
+//				Column currentColumn = this.board[colIt];
+//				Coin coin = currentColumn.get(coinToGet);
+//				diagonal[dia] = coin;
+//				dia++;
+//			}
+//		}
 		return diagonal;
 	}		
 
@@ -238,21 +256,16 @@ public class Board implements Cloneable{
 	 * @return
 	 */
 	public Coin[] getRightDiagonal(int x){
-		int diagonalSize;
-		
-		if (rows>columns)
-			diagonalSize = rows;
-		else
-			diagonalSize = columns;
-		
-		
+		int diagonalSize = diagonalSize(x);		
 		Coin[] diagonal = new Coin[diagonalSize];
-
-		for(int colIt = 0 ; colIt < diagonalSize; colIt++){
+		int dia = 0;
+		for(int colIt = 0; colIt < columns; colIt++){
 			int coinToGet = x+(winCondition-1)-colIt;
 			if (!((coinToGet >= rows) || (coinToGet < 0))){
 				Column currentColumn = this.board[colIt];
-				diagonal[colIt] = currentColumn.get(coinToGet);
+				Coin coin = currentColumn.get(coinToGet);
+				diagonal[dia] = coin;
+				dia++;
 			}
 		}
 		return diagonal;
@@ -263,7 +276,7 @@ public class Board implements Cloneable{
 	 * @return
 	 */
  	public int diagonalCount(){
-		return rows+columns-2*(winCondition-1)+1;
+		return rows+columns-2*(winCondition-1)-1;
 	}
  	
 	/**
