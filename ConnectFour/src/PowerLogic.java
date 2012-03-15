@@ -31,7 +31,7 @@ public class PowerLogic implements IGameLogic {
      * Returns winner from Winner enum. Either PLAYER1, PLAYER2, TIE or NOT_FINISHED
      */
     public Winner gameFinished() {
-    	StateEvolved test = new StateEvolved(this.board);
+    	State test = new State(this.board);
 
     	if (test.getUtility() == test.getPlayerWin()){
     		if(newPlayerID==1) return Winner.PLAYER1;
