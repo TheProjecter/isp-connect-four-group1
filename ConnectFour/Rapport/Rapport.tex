@@ -33,10 +33,38 @@ combination of the minimax algorithm, depth-limited search,
 \alpha-\beta-pruning and a heuristic evaluation function.
 
 \section*{Search and Cut-off Function}
-Our first attempt was a simple depth-first search, which included a cut-off
-after a certain number recursive calls. 
+Our first attempt was a simple depth-first search-implementation of the
+mini-max algorithm, which included a cut-off after a certain number recursive
+calls and \alpha - \beta-pruning. 
 
-(iterative deepening depth-first search)
+In the the depth-first search-implementation, we would recursively consider the
+opponents response to each action. This amounted to recursively calling the min
+and max methods for each action associated with the state we were in at the time
+of the call. Our experience led us to introduce some changes to the final AI
+player.
+
+The depth-first search led to only a small part of the search space to
+evaluated since we would sequantially start with the first action of the first
+state considereder and then first action the resulting and hence forward until
+we reached a terminal state. We would only reach a few terminal states when the
+board size was large enough, due to our time constraints.
+
+Even when \alpha-\beta-pruning was introduced, the search space was still too
+large for board sizes larger than 4x4. 
+
+The solution was to introduce depth-limited search and a heuristic evaluation
+function. Introducing depth-limited search amounted to changed how we our
+cut-offs worked (i.e. not cut-offs due to \alpha-\beta-pruning). Instead of a
+counter that increased with every recursive call, we introduced a counter for
+the depth of the search tree.
+
+Without a heuristic the changes made the new AI player worse for larger boards,
+when we kept the depth of the search tree on the lower end. Since no terminal
+state was ever reached, the utility of playing a certain action was never
+evaluated. This shows that a heuristic is extremely important but also that it
+is the heuristic that decides moves, and thus the logic, for the AI player,
+until it can reach terminal states in its search. Choosing a good heuristic is
+thus what this approach boils down to.
 
 \section*{Evaluation Function}
 
