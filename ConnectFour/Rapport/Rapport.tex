@@ -1,4 +1,6 @@
 \documentclass[11pt, a4paper]{article}
+\usepackage{color}
+\usepackage{listings}
 \usepackage{fullpage}
 \usepackage{amsfonts}
 \usepackage[latin1]{inputenc}
@@ -23,6 +25,12 @@
 \title{Intelligent Systems Programming, Assignment 1: Connect Four Game}
 \date{\today}
 \begin{document}
+
+\lstset{language=Java, breaklines = true, identifierstyle=\ttfamily,
+keywordstyle=\color[rgb]{0.700,0.100,0.500},
+commentstyle=\color[rgb]{0.133,0.545,0.133},
+stringstyle=\color[rgb]{0,0,1}, extendedchars=true,
+basicstyle=\scriptsize,numbers=left,numberstyle=\tiny}
 \maketitle
 \newpage
 \section*{Introduction}
@@ -49,7 +57,7 @@ state considereder and then first action the resulting and hence forward until
 we reached a terminal state. We would only reach a few terminal states when the
 board size was large enough, due to our time constraints.
 
-Even when \alpha-\beta-pruning was introduced, the search space was still too
+Even when \alpha\-\beta\-pruning was introduced, the search space was still too
 large for board sizes larger than 4x4. 
 
 The solution was to introduce depth-limited search and a heuristic evaluation
@@ -65,6 +73,15 @@ evaluated. This shows that a heuristic is extremely important but also that it
 is the heuristic that decides moves, and thus the logic, for the AI player,
 until it can reach terminal states in its search. Choosing a good heuristic is
 thus what this approach boils down to.
+
+%% Eksempel til at sætte kode ind i tex. Kræver præcis linjeangivelse så lad os
+% vente med det til sidst!
+
+\begin{figure}
+\lstinputlisting[firstline=1,lastline=56,firstnumber=1]{../src/Board.java}
+\caption{ Excerpt of code}\label{label1}
+\end{figure}
+
 
 \section*{Evaluation Function}
 
