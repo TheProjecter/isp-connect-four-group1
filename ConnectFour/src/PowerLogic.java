@@ -71,6 +71,7 @@ public class PowerLogic implements IGameLogic {
      * It returns an int signifying the column that should be added a coin to.
      */
     public int decideNextMove() {
+		System.out.println(board);
 		System.out.println("Strong mind thinking...");
 	    MiniMaxAB minmax = new MiniMaxAB();
 	    int a = minmax.ABsearch(this.board);
