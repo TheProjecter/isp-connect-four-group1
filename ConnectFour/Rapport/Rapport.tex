@@ -38,7 +38,7 @@ basicstyle=\scriptsize,numbers=left,numberstyle=\tiny}
 
 We have developed an implementation of a connect four agent that uses a
 combination of the minimax algorithm, depth-limited search,
-\alpha-\beta-pruning and a heuristic evaluation function.
+\alpha-\beta-pruning, a transposition table and a heuristic evaluation function.
 
 \section*{Search and Cut-off Function}
 Our first attempt was a simple depth-first search-implementation of the
@@ -73,6 +73,38 @@ evaluated. This shows that a heuristic is extremely important but also that it
 is the heuristic that decides moves, and thus the logic, for the AI player,
 until it can reach terminal states in its search. Choosing a good heuristic is
 thus what this approach boils down to.
+
+Parallel to the implementation of depth-limited search we also implemented a
+transposition table. This provides a dictionary where the AI player can lookup
+states already evaluated states. Since a certain state can be reached by taking
+actions in different orders, one should see improvements speed since we
+reduce some searches to constant lookups in a hash table. 
+
+However, we experienced that the transposition table did not improve running
+time but rather reduced it. The overhead of putting states into the
+transposition table seemed to outweigh any benefits the constant lookup
+provided. Our keys in the dictionary are states that are quite large. For the
+competition board of 6x7 we end of with end up with 3^42 possible combinations
+of information for each state. We actually use more since we erred on the side
+of easy implementation. Each field on the board is coded as 2 bits so we end up
+with 4^42 possible combinations (2^42 bits). We tried our hands on our own hash
+functions implementations but in the end we used Javas.
+
+\section*{Archicture and Implementation}
+To better understand our solution one needs to understand our chosen
+architectural design and how we have implemented the methods.
+
+MatrixLogix is our implementation of the IGameLogic interface. We have opted to
+push most of the logic to other clases for cleaner implementation.
+
+The AI player uses a Board object to store states in. Board objects are passed
+between methods that require information about a certain state.
+
+
+
+
+ 
+
 
 %% Eksempel til at sætte kode ind i tex. Kræver præcis linjeangivelse så lad os
 % vente med det til sidst!
