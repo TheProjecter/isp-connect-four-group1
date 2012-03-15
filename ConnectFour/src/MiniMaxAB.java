@@ -9,8 +9,6 @@ public class MiniMaxAB {
 
 	int ABsearch(Board board){
 //			cutoff=(int) ((float) (189/board.openSlotsLeft()+2.5));
-
-//			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
 			int choice = ToolSet.Actions(board)[0];
 			int[] vAd = new int[2];
 			vAd[0] = Integer.MIN_VALUE;
@@ -18,9 +16,7 @@ public class MiniMaxAB {
 			
 			for (int a: ToolSet.Actions(board)){
 				counter++;
-//				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);
 				int[] bAd = MinValue((ToolSet.Result(board,a,1)), Integer.MIN_VALUE, Integer.MAX_VALUE);
-//				if(b==v) choice=a;
 				if(bAd[0] > vAd[0]) {
 					choice = a;
 					vAd = bAd;
@@ -67,10 +63,14 @@ public class MiniMaxAB {
 			int[] minV = MinValue((ToolSet.Result(board,a,1)),alpha,beta);
 			counter--;
 			if(v[0] < minV[0])v = minV;
-			
 			if(v[0] >= beta) return v;
-
-			
+//			Inserting supercode
+			if(v[0] == minV[0]){
+				if(minV[0] >= 0) {
+					if(minV[1] < v[1]) v = minV;
+				}
+				else if(minV[1] > v[1]) v = minV;
+			}
 			alpha=ToolSet.Max(alpha,v[0]);
 		}
 		return v;
@@ -99,7 +99,13 @@ public class MiniMaxAB {
 			counter--;
 			if(v[0] > maxV[0])v = maxV;			
 			if(v[0] <= alpha) return v;
-
+			//Inserting supercode			
+			if(v[0] == maxV[0]){
+				if(maxV[0] >= 0) {
+					if(maxV[1] < v[1]) v = maxV;
+				}
+				else if(maxV[1] > v[1]) v = maxV;
+			}
 			beta = ToolSet.Min(beta,v[0]);
 		}
 

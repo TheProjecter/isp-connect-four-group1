@@ -1,6 +1,6 @@
 public class MMABWeakDepthLtm {
-	int counter = 0;
-	int cutoff = 6;
+	int counter =0;
+	int cutoff = 7;
 	int evals = 0;
 	int depth = 0;
 	
@@ -9,24 +9,19 @@ public class MMABWeakDepthLtm {
 
 	int ABsearch(Board board){
 //			cutoff=(int) ((float) (189/board.openSlotsLeft()+2.5));
-
-//			int v = MaxValue(board,Integer.MIN_VALUE,Integer.MAX_VALUE);
 			int choice = ToolSet.Actions(board)[0];
 			int[] vAd = new int[2];
 			vAd[0] = Integer.MIN_VALUE;
-			vAd[1] = Integer.MAX_VALUE;
+			vAd[1] = 0;
 			
 			for (int a: ToolSet.Actions(board)){
 				counter++;
-//				int b = MinValue(ToolSet.Result(board,a,1),Integer.MIN_VALUE,Integer.MAX_VALUE);
 				int[] bAd = MinValue((ToolSet.Result(board,a,1)), Integer.MIN_VALUE, Integer.MAX_VALUE);
-//				if(b==v) choice=a;
 				if(bAd[0] > vAd[0]) {
 					choice = a;
 					vAd = bAd;
 				}
-				else{
-					if(bAd[0] == vAd[0]){
+				else if(bAd[0] == vAd[0]){
 						if(bAd[0] >= 0) {
 							if(bAd[1] < vAd[1]){
 								vAd = bAd;
@@ -38,11 +33,10 @@ public class MMABWeakDepthLtm {
 							choice = a;
 						}
 					}
-				}
 				counter--;
 			}
 
-			System.out.println("At depth "+depth+", after " + evals+" evaluations, and "+board.openSlotsLeft()+" open slots left in the board.");
+			System.out.println("At depth "+vAd[1]+", after " + evals+" evaluations, and "+board.openSlotsLeft()+" open slots left in the board.");
 			counter=0;
 			System.out.println("I have chosen to play: "+choice);
 			System.out.println("For an expected outcome of: "+vAd[0]+", at depth:"+vAd[1]);
@@ -51,10 +45,9 @@ public class MMABWeakDepthLtm {
 	
 	int[] MaxValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
-		ret[1] = depth;
+		ret[1] = counter;
 		StateEvolved test = new StateEvolved(board);
 		if(counter>cutoff){
-			depth=counter;
 			ret[0] = test.getUtility();
 			return ret;
 			}
@@ -63,26 +56,29 @@ public class MMABWeakDepthLtm {
 			ret[0] = test.getUtility();
 			return ret;	
 		}
-		
-		int v = Integer.MIN_VALUE;
+		int v[] = new int[2];
+		v[0] = Integer.MIN_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			counter++;
-			v=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1)),alpha,beta)[0]);
+			int[] minV = MinValue((ToolSet.Result(board,a,1)),alpha,beta);
 			counter--;
-			if(v>=beta){
-				ret[0] = v;
-				return ret;
+			if(v[0] < minV[0])v = minV;
+			if(v[0] >= beta) return v;
+//			Inserting supercode
+			if(v[0] == minV[0]){
+				if(minV[0] >= 0) {
+					if(minV[1] < v[1]) v = minV;
+				}
+				else if(minV[1] > v[1]) v = minV;
 			}
-			
-			alpha=ToolSet.Max(alpha,v);
+			alpha=ToolSet.Max(alpha,v[0]);
 		}
-		ret[0] = v;
-		return ret;
+		return v;
 	}
 	
 	int[] MinValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
-		ret[1] = depth;
+		ret[1] = counter;
 		StateEvolved test = new StateEvolved(board);
 		if(counter>cutoff){
 			depth=counter;
@@ -91,23 +87,29 @@ public class MMABWeakDepthLtm {
 		}
 		evals++;
 		if(test.isTerminal()){
+			if(counter>depth) depth=counter;
 			ret[0] = test.getUtility();
 			return ret;		
 		}
-		int v = Integer.MAX_VALUE;
+		int v[] = new int[2];
+		v[0] = Integer.MAX_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			counter++;
-			v=ToolSet.Min(v,MaxValue((ToolSet.Result(board,a,-1)),alpha,beta)[0]);
+			int[] maxV = MaxValue((ToolSet.Result(board,a,-1)),alpha,beta);
 			counter--;
-			if(v<=alpha){
-				ret[0] = v;
-				return ret;
+			if(v[0] > maxV[0])v = maxV;			
+			if(v[0] <= alpha) return v;
+			//Inserting supercode			
+			if(v[0] == maxV[0]){
+				if(maxV[0] >= 0) {
+					if(maxV[1] < v[1]) v = maxV;
 				}
-			beta = ToolSet.Min(beta,v);
+				else if(maxV[1] > v[1]) v = maxV;
+			}
+			beta = ToolSet.Min(beta,v[0]);
 		}
 
-		ret[0] = v;
-		return ret;
+		return v;
 	}
 
 }

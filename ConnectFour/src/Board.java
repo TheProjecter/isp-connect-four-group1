@@ -207,14 +207,14 @@ public class Board implements Cloneable{
 		if (rows<columns) maxDiagonalSize = rows;
 		else maxDiagonalSize = columns;
 		
-		System.out.println("DiagonalCount: "+(int) diagonalCount);
-		System.out.println("DiagonalCount/2: "+(int) diagonalCount/2);
+//		System.out.println("DiagonalCount: "+(int) diagonalCount);
+//		System.out.println("DiagonalCount/2: "+(int) diagonalCount/2);
 		if(x>diagonalCount/2) diagonalSize = (diagonalCount-1-x+winCondition);
 		else diagonalSize = x+winCondition;
 		
 		if(diagonalSize>maxDiagonalSize) diagonalSize = maxDiagonalSize;
 
-		System.out.println("Diagonal size for diagonal "+x+" is: "+diagonalSize);
+//		System.out.println("Diagonal size for diagonal "+x+" is: "+diagonalSize);
 		return diagonalSize;
 	}
 	
