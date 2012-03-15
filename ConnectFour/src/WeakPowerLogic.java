@@ -24,7 +24,7 @@ public class WeakPowerLogic implements IGameLogic {
     }
 	
     public Winner gameFinished() {
-    	StateEvolved test = new StateEvolved(this.board);
+    	State test = new State(this.board);
 
     	if (test.getUtility() == test.getPlayerWin()){
     		if(newPlayerID==1) return Winner.PLAYER1;

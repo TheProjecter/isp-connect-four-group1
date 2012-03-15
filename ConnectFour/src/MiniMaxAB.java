@@ -1,6 +1,6 @@
 public class MiniMaxAB {
 	int counter =0;
-	int cutoff = 7;
+	int cutoff = 8;
 	int evals = 0;
 	int depth = 0;
 	
@@ -46,7 +46,7 @@ public class MiniMaxAB {
 	int[] MaxValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
 		ret[1] = counter;
-		StateEvolved test = new StateEvolved(board);
+		State test = new State(board);
 		if(counter>cutoff){
 			ret[0] = test.getUtility();
 			return ret;
@@ -79,7 +79,7 @@ public class MiniMaxAB {
 	int[] MinValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
 		ret[1] = counter;
-		StateEvolved test = new StateEvolved(board);
+		State test = new State(board);
 		if(counter>cutoff){
 			depth=counter;
 			ret[0] = test.getUtility();
