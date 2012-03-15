@@ -4,8 +4,8 @@ public class State {
 	private int winCondition;
 	private boolean isFull = false;
 	private int playerWin =  1000000;
-	private int expoOne = 10;
-	private int expoTwo = 10;
+	private int expoOne = 0;
+	private int expoTwo = 0;
 	
 	public State(Board board){
 		this.winCondition = board.getWinCondition();
@@ -17,8 +17,8 @@ public class State {
 	}
 	
 	public State(Board board, int playerID){
-		if(playerID == 1){expoOne=30; expoTwo=10;}
-		else{expoOne=10; expoTwo=30;}
+		if(playerID == 1)expoOne=3;
+		else expoTwo=3;
 		this.winCondition = board.getWinCondition();
 		if(board.isFull()){
 			this.isFull = true;
@@ -175,7 +175,8 @@ public class State {
 				
 				for(int one: oneHeu){
 					if(one!=0){
-						int value = (int) Math.pow(expoOne,oneCount);
+						if (oneCount == 3) oneCount += expoOne;
+						int value = (int) Math.pow(10,oneCount);
 						tempHeuristic += value*one;
 						oneCount++;
 						zeroCount--;
@@ -194,8 +195,9 @@ public class State {
 				int tempHeuristic = 0;
 
 				for(int two: twoHeu){
+					if (twoCount == 3) twoCount += expoTwo;
 					if(two!=0){
-					int value = (int) Math.pow(expoTwo,twoCount);
+					int value = (int) Math.pow(10,twoCount);
 					heuristic += value*two;
 					twoCount++;
 					zeroCount--;
