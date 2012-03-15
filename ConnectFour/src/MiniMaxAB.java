@@ -8,7 +8,7 @@ public class MiniMaxAB {
 	}
 
 	int ABsearch(Board board){
-//			cutoff=(int) ((float) (189/board.openSlotsLeft()+2.5));
+//			cutoff = (int) ((float) (189/board.openSlotsLeft()+2.5));
 			int choice = ToolSet.Actions(board)[0];
 			int[] vAd = new int[2];
 			vAd[0] = Integer.MIN_VALUE;
@@ -38,7 +38,7 @@ public class MiniMaxAB {
 	int[] MaxValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
 		ret[1] = counter;
-		State test = new State(board);
+		State test = new State(board, 1);
 		if(counter>cutoff){
 			ret[0] = test.getUtility();
 			return ret;
@@ -54,7 +54,7 @@ public class MiniMaxAB {
 			counter++;
 			int[] minV = MinValue((ToolSet.Result(board,a,1)),alpha,beta);
 			counter--;
-			if(v[0] < minV[0])v = minV;
+			if(v[0] < minV[0]) v = minV;
 			if(v[0] >= beta) return v;
 //			Inserting supercode
 			if(v[0] == minV[0]){
@@ -69,7 +69,7 @@ public class MiniMaxAB {
 	int[] MinValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
 		ret[1] = counter;
-		State test = new State(board);
+		State test = new State(board, 2);
 		if(counter>cutoff){
 			depth=counter;
 			ret[0] = test.getUtility();

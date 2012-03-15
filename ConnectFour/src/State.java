@@ -4,8 +4,21 @@ public class State {
 	private int winCondition;
 	private boolean isFull = false;
 	private int playerWin =  1000000;
+	private int expoOne = 10;
+	private int expoTwo = 10;
 	
 	public State(Board board){
+		this.winCondition = board.getWinCondition();
+		if(board.isFull()){
+			this.isFull = true;
+		}
+		this.utility = setUtility(board);
+		if(utility==99) utility = this.calcBoardHeuristic(board);
+	}
+	
+	public State(Board board, int playerID){
+		if(playerID == 1){expoOne=30; expoTwo=10;}
+		else{expoOne=10; expoTwo=30;}
 		this.winCondition = board.getWinCondition();
 		if(board.isFull()){
 			this.isFull = true;
@@ -162,7 +175,7 @@ public class State {
 				
 				for(int one: oneHeu){
 					if(one!=0){
-						int value = (int) Math.pow(10,oneCount);
+						int value = (int) Math.pow(expoOne,oneCount);
 						tempHeuristic += value*one;
 						oneCount++;
 						zeroCount--;
@@ -182,7 +195,7 @@ public class State {
 
 				for(int two: twoHeu){
 					if(two!=0){
-					int value = (int) Math.pow(10,twoCount);
+					int value = (int) Math.pow(expoTwo,twoCount);
 					heuristic += value*two;
 					twoCount++;
 					zeroCount--;
