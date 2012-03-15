@@ -1,6 +1,6 @@
 public class MatrixLogic implements IGameLogic {
     private Board board = new Board(0,0);
-    private MiniMaxABDepthFirst minmax = new MiniMaxABDepthFirst();
+    private MiniMaxABDepthFirstHur minmax = new MiniMaxABDepthFirstHur();
     private int playerID;
     
     public MatrixLogic() {
