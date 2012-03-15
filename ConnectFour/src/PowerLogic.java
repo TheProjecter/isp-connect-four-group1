@@ -50,6 +50,7 @@ public class PowerLogic implements IGameLogic {
     }
     
     
+    
     /**
      * Insert a coin in the column specified for the player specified. 
      */
