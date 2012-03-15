@@ -1,6 +1,6 @@
 public class MMABWeakDepthLtm {
 	int counter =0;
-	int cutoff = 9;
+	int cutoff = 7;
 	int evals = 0;
 	int depth = 0;
 	
@@ -8,7 +8,7 @@ public class MMABWeakDepthLtm {
 	}
 
 	int ABsearch(Board board){
-//			cutoff=(int) ((float) (189/board.openSlotsLeft()+2.5));
+//			cutoff = (int) ((float) (189/board.openSlotsLeft()+2.5));
 			int choice = ToolSet.Actions(board)[0];
 			int[] vAd = new int[2];
 			vAd[0] = Integer.MIN_VALUE;
@@ -22,17 +22,9 @@ public class MMABWeakDepthLtm {
 					vAd = bAd;
 				}
 				else if(bAd[0] == vAd[0]){
-						if(bAd[0] >= 0) {
-							if(bAd[1] < vAd[1]){
-								vAd = bAd;
-								choice = a;
-							}
-						}
-						else if(bAd[1] > vAd[1]) {
-							vAd = bAd;
-							choice = a;
-						}
-					}
+					if(bAd[0] == board.getWinCondition() && bAd[1] < vAd[1]) {vAd = bAd; choice = a;}
+					else if(bAd[0] == -board.getWinCondition() && bAd[1] > vAd[1]) {vAd = bAd; choice = a;}
+				}
 				counter--;
 			}
 
@@ -46,7 +38,7 @@ public class MMABWeakDepthLtm {
 	int[] MaxValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
 		ret[1] = counter;
-		State test = new State(board);
+		State test = new State(board, 1);
 		if(counter>cutoff){
 			ret[0] = test.getUtility();
 			return ret;
@@ -62,14 +54,12 @@ public class MMABWeakDepthLtm {
 			counter++;
 			int[] minV = MinValue((ToolSet.Result(board,a,1)),alpha,beta);
 			counter--;
-			if(v[0] < minV[0])v = minV;
+			if(v[0] < minV[0]) v = minV;
 			if(v[0] >= beta) return v;
 //			Inserting supercode
 			if(v[0] == minV[0]){
-				if(minV[0] >= 0) {
-					if(minV[1] < v[1]) v = minV;
-				}
-				else if(minV[1] > v[1]) v = minV;
+				if(minV[0] == board.getWinCondition() && minV[1] < v[1]) v = minV;
+				else if(minV[0] == -board.getWinCondition() && minV[1] > v[1]) v = minV;
 			}
 			alpha=ToolSet.Max(alpha,v[0]);
 		}
@@ -79,7 +69,7 @@ public class MMABWeakDepthLtm {
 	int[] MinValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
 		ret[1] = counter;
-		State test = new State(board);
+		State test = new State(board, 2);
 		if(counter>cutoff){
 			depth=counter;
 			ret[0] = test.getUtility();
@@ -101,10 +91,8 @@ public class MMABWeakDepthLtm {
 			if(v[0] <= alpha) return v;
 			//Inserting supercode			
 			if(v[0] == maxV[0]){
-				if(maxV[0] >= 0) {
-					if(maxV[1] < v[1]) v = maxV;
-				}
-				else if(maxV[1] > v[1]) v = maxV;
+				if(maxV[0] == -board.getWinCondition() && maxV[1] < v[1]) v = maxV;
+				else if(maxV[0] == board.getWinCondition() && maxV[1] > v[1]) v = maxV;
 			}
 			beta = ToolSet.Min(beta,v[0]);
 		}
