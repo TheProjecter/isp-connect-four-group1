@@ -40,7 +40,7 @@ public class MiniMaxAB {
 				counter--;
 			}
 
-			System.out.println("At depth "+depth+", after " + evals+" evaluations, and "+board.openSlotsLeft()+" open slots left in the board.");
+			System.out.println("At depth "+vAd[1]+", after " + evals+" evaluations, and "+board.openSlotsLeft()+" open slots left in the board.");
 			counter=0;
 			System.out.println("I have chosen to play: "+choice);
 			System.out.println("For an expected outcome of: "+vAd[0]+", at depth:"+vAd[1]);
@@ -49,39 +49,36 @@ public class MiniMaxAB {
 	
 	int[] MaxValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
-		ret[1] = depth;
+		ret[1] = counter;
 		StateEvolved test = new StateEvolved(board);
 		if(counter>cutoff){
-			depth=counter;
 			ret[0] = test.getUtility();
 			return ret;
 			}
 		evals++;
 		if(test.isTerminal()){
-			if(counter>depth) depth=counter;
 			ret[0] = test.getUtility();
 			return ret;	
 		}
-		
-		int v = Integer.MIN_VALUE;
+		int v[] = new int[2];
+		v[0] = Integer.MIN_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			counter++;
-			v=ToolSet.Max(v,MinValue((ToolSet.Result(board,a,1)),alpha,beta)[0]);
+			int[] minV = MinValue((ToolSet.Result(board,a,1)),alpha,beta);
 			counter--;
-			if(v>=beta){
-				ret[0] = v;
-				return ret;
-			}
+			if(v[0] < minV[0])v = minV;
 			
-			alpha=ToolSet.Max(alpha,v);
+			if(v[0] >= beta) return v;
+
+			
+			alpha=ToolSet.Max(alpha,v[0]);
 		}
-		ret[0] = v;
-		return ret;
+		return v;
 	}
 	
 	int[] MinValue(Board board,int alpha,int beta){
 		int[] ret = new int[2];
-		ret[1] = depth;
+		ret[1] = counter;
 		StateEvolved test = new StateEvolved(board);
 		if(counter>cutoff){
 			depth=counter;
@@ -94,20 +91,19 @@ public class MiniMaxAB {
 			ret[0] = test.getUtility();
 			return ret;		
 		}
-		int v = Integer.MAX_VALUE;
+		int v[] = new int[2];
+		v[0] = Integer.MAX_VALUE;
 		for (int a:ToolSet.Actions(board)){
 			counter++;
-			v=ToolSet.Min(v,MaxValue((ToolSet.Result(board,a,-1)),alpha,beta)[0]);
+			int[] maxV = MaxValue((ToolSet.Result(board,a,-1)),alpha,beta);
 			counter--;
-			if(v<=alpha){
-				ret[0] = v;
-				return ret;
-				}
-			beta = ToolSet.Min(beta,v);
+			if(v[0] > maxV[0])v = maxV;			
+			if(v[0] <= alpha) return v;
+
+			beta = ToolSet.Min(beta,v[0]);
 		}
 
-		ret[0] = v;
-		return ret;
+		return v;
 	}
 
 }
