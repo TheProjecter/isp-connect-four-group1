@@ -33,29 +33,24 @@ stringstyle=\color[rgb]{0,0,1}, extendedchars=true,
 basicstyle=\scriptsize,numbers=left,numberstyle=\tiny}
 \maketitle
 \newpage
-\section*{Introduction}
+\section*{Introduction and approach}
 
+To solve the challenge of creating a connect four-playing algorithm we chose a rather experimenting approach. The final result is the best of a number of implementations and failed experiments. We will first briefly describe some of the process and in detail the final implementation.
 
-We have developed an implementation of a connect four agent that uses a
-combination of the minimax algorithm, depth-limited search,
-$\alpha-\beta$-pruning, a transposition table and a heuristic evaluation function.
-
-\section*{Search and Cut-off Function}
 Our first attempt was a simple depth-first search-implementation of the
-mini-max algorithm, which included a cut-off after a certain number recursive
-calls and $\alpha - \beta$-pruning.
+mini-max algorithm. To implement this a solid and fast data structure was required. We have built a structure that is more or less a 2d array of boolean objects(Coins). This data structure proved to be rather successful.  
 
 In the the depth-first search-implementation, we would recursively consider the
 opponents response to each action. This amounted to recursively calling the min
 and max methods for each action associated with the state we were in at the time
-of the call. Our experience led us to introduce some changes to the final AI
+of the call. Our experience with this led us to introduce some changes to the final AI
 player.
 
-The depth-first search led to only a small part of the search space to
-evaluated since we would sequantially start with the first action of the first
-state considereder and then first action the resulting and hence forward until
+The depth-first search led to only a small part of the search space to be
+evaluated since we would sequentially start with the first action of the first
+state considered and then the consider the first action the resulting state and hence forward until
 we reached a terminal state. We would only reach a few terminal states when the
-board size was large enough, due to our time constraints.
+board size was large, due to our time constraints.
 
 Even when $\alpha-\beta$-pruning was introduced, the search space was still too
 large for board sizes larger than 4x4.
@@ -72,7 +67,7 @@ state was ever reached, the utility of playing a certain action was never
 evaluated. This shows that a heuristic is extremely important but also that it
 is the heuristic that decides moves, and thus the logic, for the AI player,
 until it can reach terminal states in its search. Choosing a good heuristic is
-thus what this approach boils down to.
+thus what this approach to AI boils down to.
 
 Parallel to the implementation of depth-limited search we also implemented a
 transposition table. This provides a dictionary where the AI player can lookup
@@ -84,38 +79,40 @@ However, we experienced that the transposition table did not improve running
 time but rather reduced it. The overhead of putting states into the
 transposition table seemed to outweigh any benefits the constant lookup
 provided. Our keys in the dictionary are states that are quite large. For the
-competition board of $6*7$ we end of with end up with $3^42$ possible combinations
+competition board of $6*7$ we end up with $3^{42}$ possible combinations
 of information for each state. We actually use more since we erred on the side
-of easy implementation. Each field on the board is coded as 2 bits so we end up
-with $4^42$ possible combinations ($2^42$ bits). We tried our hands on our own hash
-functions implementations but in the end we used Javas.
+of easy implementation. Each field on the board would be coded as 2 bits so we would end up
+with $4^{42}$ possible combinations ($2^{42}$ bits). In the end decided not to use transposition tables at all. The overhead was too large compared to the benefit. 
 
-\section*{Archicture and Implementation}
-To better understand our solution one needs to understand our chosen
-architectural design and how we have implemented the methods.
+\section*{Search and Cut-off Function}
 
-MatrixLogix is our implementation of the IGameLogic interface. We have opted to
-push most of the logic to other clases for a cleaner implementation.
-
-The AI player uses a Board object to store states in. Board objects are passed
-between methods that require information about a certain state.
-
-
-%% Eksempel til at sætte kode ind i tex. Kræver præcis linjeangivelse så lad os
-% vente med det til sidst!
+The final search is an implementation of a depth limited,$\alpha-\beta$-pruned, Minimax algorithm. It follows the book rather closely, but we will go though to cut-off and other specifics not included in the book.
 
 \begin{figure}
-\lstinputlisting[firstline=1,lastline=56,firstnumber=1]{../src/Board.java}
-\caption{ Excerpt of code}\label{label1}
+\lstinputlisting[firstline=1,lastline=109,firstnumber=1]{../src/MiniMaxAB.java}
+\caption{ Excerpt of code}\label{MinimaxAB}
 \end{figure}
 
+The main difference between this implementation and the pseudocode on page 170 is the implementation of a depth-limit. This makes is necessary to trace the depth of the return values. We do this using the vAd and bAd arrays(v And Depth, b And Depth). The helper functions are gathered in separate classes called ToolSet and StateEvolved. ToolSet includes functionality for transforming boards and performing calculations like Result() and Max(). StateEvolved includes methods for evaluating states, like Utility() and isTerminal().
+
+To understand the implementation we will walk through the elements of the general algorithm and explain our java-implementation of same element.
+
+A state is a implemented as an instance of the class $State$. A state has a Utility and a test to checks if it's terminal. $State$ is constructed from an instance of the class $Board$ which holds the data-structure for our boards and all information on the placement of $Coins$. There is a very close relationship between a state and a $Board$, but we have split them in order to maintain separation between board and the interpretation of the board. The actions are defined through a query to the $Board$-instance asking for the open columns of the board. This returns an array of integers, signifying the number of a column. The transition between two states can then be carried out through the $Result()$ method which takes a $Board$-instance, an integer(the column to play), and the ID of the player adding his coin, it returns a new board with the added information. The helper functions $Max()$ and $Min()$ are part of the $ToolSet$ class.
+
+Since the state space is so large the Utility of a state cannon't simply be the "real" minimax value, but must be heuristic in case of a cut-off. The next section details our evaluation function.
 
 \section*{Evaluation Function}
 
+The evaluation function calculates the heuristic of a given board. It uses a function "calcCoinHeuristic()" to evaluate the individual rows, columns and diagonals. This is the function that determines the heuristic value. Given a coin array the function checks if there is a possibility for a winning condition. The closer the player is to a winning condition, the higher the power of ten times the player value is added to the heuristics. E.g. if playerOne has three coins in a row followed by one null value, the added value to the heuristic is $1*10^0+1*10^1+1*10^2 = 111$ and vice versa $-1*10^0+-1*10^1+-1*10^2 = -111$ is added to the heuristic for player 2.
 
+This makes boards with connected friendly coins much more attractive than boards with connected enemy coins. Using the factor ten also means that a board with a single 3-connected situation will be much more attractive than a large number of 2 or 1-connected situations. A problem is that this does not take into account rows or diagonals with zeros followed by opponent coins and therefor underestimates situations where it is possible to play an unchallenged 3-connection, something that will always lead to a win in one move. This can be improved by including information on player turns, but was beyond our timeframe.
 
+The evaluation function simply sums the heuristic values for all the possible rows, columns and diagonals. The "calcCoinHeuristic()" function is inserted below.
 
-
+\begin{figure}
+\lstinputlisting[firstline=135,lastline=203,firstnumber=135]{../src/StateEvolved.java}
+\caption{ Excerpt of code}\label{StateEvolved}
+\end{figure}
 
 \end{document}
 
