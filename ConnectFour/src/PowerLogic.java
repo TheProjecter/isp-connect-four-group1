@@ -1,3 +1,7 @@
+/**
+ * The PowerLogic class 
+ *
+ */
 public class PowerLogic implements IGameLogic {
     private Board board = new Board(0,0);
     private int newPlayerID;
@@ -5,7 +9,7 @@ public class PowerLogic implements IGameLogic {
     private int opponentID;
     
     public PowerLogic() {
-        //TODO Write your implementation for this method
+    	
     }
 	
     public void initializeGame(int x, int y, int playerID) {
@@ -45,7 +49,6 @@ public class PowerLogic implements IGameLogic {
     public void insertCoin(int column, int playerID) {
         System.out.println("I am player "+this.playerID);
 
-        //TODO Write your implementation for this method
     	if (playerID == this.newPlayerID) {
     		System.out.println("I insert a coin in column #"+column+" for me.");
     		board.add(column, 1);
