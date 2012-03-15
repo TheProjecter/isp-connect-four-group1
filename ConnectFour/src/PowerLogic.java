@@ -1,17 +1,17 @@
 /**
- * The PowerLogic class 
- *
+ * The PowerLogic class is an implementation of the IGameLogic interface 
+ * that uses depth-limited search and alpha-beta pruning.
  */
 public class PowerLogic implements IGameLogic {
-    private Board board = new Board(0,0);
+    private Board board = new Board(0,0); //Data structure to save current state
     private int newPlayerID;
     private int playerID;
     private int opponentID;
     
-    public PowerLogic() {
-    	
-    }
-	
+    
+    /**
+     * The method initializes initial state and sets internal variables.
+     */
     public void initializeGame(int x, int y, int playerID) {
     	this.playerID = playerID;
         this.board = new Board(x,y);
@@ -27,6 +27,9 @@ public class PowerLogic implements IGameLogic {
         System.out.println("My opponent is player "+opponentID);
     }
 	
+    /**
+     * Returns winner from Winner enum. Either PLAYER1, PLAYER2, TIE or NOT_FINISHED
+     */
     public Winner gameFinished() {
     	StateEvolved test = new StateEvolved(this.board);
 
@@ -46,6 +49,10 @@ public class PowerLogic implements IGameLogic {
     	return Winner.NOT_FINISHED;
     }
     
+    
+    /**
+     * Insert a coin in the column specified for the player specified. 
+     */
     public void insertCoin(int column, int playerID) {
         System.out.println("I am player "+this.playerID);
 
@@ -59,6 +66,10 @@ public class PowerLogic implements IGameLogic {
     	}
     }
 
+    /**
+     * The method creates a new MiniMaxAB object and performs a search based on the current state of the board.
+     * It returns an int signifying the column that should be added a coin to.
+     */
     public int decideNextMove() {
 		System.out.println("Strong mind thinking...");
 	    MiniMaxAB minmax = new MiniMaxAB();
